@@ -1,7 +1,7 @@
 /* ===========================================================================
  *  closed_1103.c
  *
- *  ブリッジレスPFC（Q1/Q2） ＋ 位相シフトフルブリッジ（Q3〜Q6）  閉ループ制御
+ *  ブリッジレスPFC（Q1/Q2） ＋ 位相シフトフルブリッジ（Q3～Q6）  閉ループ制御
  *
  *  ターゲット : dsPIC33EP128GS808 DEVELOPMENT BOARD (DM330026)
  *               MPLAB X + XC16 v1.70
@@ -57,8 +57,14 @@
  *  そこで本ファイルでは PI ゼロを交差の 1/5 に置き直した。
  *
  *      ループ        交差        ゼロ       位相余裕   ゲイン余裕
- *      電流        3333 Hz     667 Hz      60.5度     13.7 dB
- *      PFC電圧        2 Hz     0.4 Hz      56.9度       --
+ *      電流        3333 Hz     667 Hz      60.6度     13.7 dB
+ *      PFC電圧        2 Hz     0.4 Hz      56.9度     12.1 dB
+ *
+ *  ★立ち上げ中はさらに帯域を下げた GAIN_SAFE = 1（既定）で回す★
+ *      電流        1000 Hz     200 Hz      73.4度     24.4 dB
+ *      PFC電圧        1 Hz     0.2 Hz      67.9度     18.3 dB
+ *    定数のばらつき（Vcs・L・C・入力電圧・遅れ）を振っても位相余裕 66度以上。
+ *    詳細は (5) 制御ゲイン。
  *
  *  ※出力電圧が指令に届かないとき、FC_V を上げてはいけない（発散する方向）。
  *    まず wout_pk と iref_pk を見て、DUTYmax / IPK_MAX_MUL に張り付いていないかを
@@ -244,7 +250,7 @@ static void holdGatesOff(void);
  *
  *    ●VO_CNT_PER_V : 動作点での小信号ゲイン（dADC/dVo）
  *        ★原点を通る弦の傾き（2650/48 = 55.2）を使ってはいけない★
- *        この特性は原点を通る直線ではない。44〜52V を最小二乗すると
+ *        この特性は原点を通る直線ではない。44～52V を最小二乗すると
  *            Vosense[mV] = 63.688 * Vo - 923.5
  *        で、動作点の傾きは弦の 1.43 倍ある。
  *        弦の値を入れると電圧ループのゲインが 1.43 倍過大になり、
@@ -252,8 +258,8 @@ static void holdGatesOff(void);
  *        ゲインを決めるのは原点からの傾きではなく動作点の傾き。
  *            63.688 [mV/V] x 4095/3300 = 79.03 [カウント/V]
  *
- *        この領域の直線性は良好（44〜52V で直線からのずれ最大 0.7mV = 1
- *        カウント、40〜56V でも 4.9mV = 6 カウント）なので、動作点まわり
+ *        この領域の直線性は良好（44～52V で直線からのずれ最大 0.7mV = 1
+ *        カウント、40～56V でも 4.9mV = 6 カウント）なので、動作点まわり
  *        の線形モデルで十分。
  *
  *    ●低電圧側は不感帯
@@ -280,7 +286,7 @@ static void holdGatesOff(void);
 #define PO_RATED_W      (VO_REF_V*IO_RATED_A)       /* 480 W                */
 #define ETA             0.93        /* 想定効率（電流上限の見積りに使うだけ）*/
 #define L_H             1.0e-3      /* PFC インダクタ L [H]                 */
-#define C_OUT_F         7.8e-3      /* 出力コンデンサ C2 [F]                */
+#define C_OUT_F         6.0e-3      /* 出力コンデンサ C2 [F]（3mF x 2）     */
 #define N_TR            4.0         /* トランス巻数比 Np/Ns(片側)           */
 #define L_LK_H          5.0e-6      /* トランス漏れインダクタンス L1 [H]    */
 
@@ -359,26 +365,67 @@ static void holdGatesOff(void);
  *    エラーも警告も出ないので、波形を見るまで気づけない種類のバグになる。
  * ======================================================================= */
 
+/* --- ゲインの選択 -------------------------------------------------------
+ *  GAIN_SAFE = 1 : 立ち上げ用（既定）。応答は遅いが、回路定数が多少ずれても
+ *                  発振しない値。初めて通電するとき、定数を校正するまでは
+ *                  こちらで回す。
+ *  GAIN_SAFE = 0 : 通常。帯域を電流 3.3 倍／電圧 2 倍に上げる
+ *                  （入力電流の歪みと負荷変動時の電圧の振れが減る）。
+ *                  校正定数（VDC_V など）を実測で合わせてから切り替える。
+ *
+ *  ばらつきを振って検証した余裕（遅れは電流 1.5～2.5 Ts、電圧 1.5 Tv）
+ *                     交差（公称）  位相余裕（最悪）   ゲイン余裕（最悪）
+ *   立ち上げ 電流      1000 Hz        67.6 度            15.7 dB
+ *            電圧       1.0 Hz        66.5 度            15.1 dB
+ *   通常     電流      3333 Hz        34.0 度             4.9 dB
+ *            電圧       2.0 Hz        50.8 度             9.0 dB
+ *   振った範囲  電流 : Vcs 190～250V、L 0.7～1.3mH（電流ピークでの L 低下）
+ *               電圧 : C 4.8～7.2mF（±20%）、入力 85～115Vrms
+ *   ★通常ゲインは「Vcs 高め・L 低下・遅れ大」が重なると余裕 34 度まで落ちる。
+ *     立ち上げ用は同じ条件でも 68 度残る。
+ *
+ *  立ち上げ用の代償
+ *   ・電流ループが遅いぶん、零クロス付近の電流の歪みが少し増える（力率・THD）。
+ *   ・電圧ループが遅いので、負荷を急変させると出力電圧が大きく振れる。
+ *     目安 dV ≒ dIo / (2π*fc*C) -> 1A のステップで約 27V。
+ *     ★立ち上げ中は負荷を少しずつゆっくり変えること。                     */
+#define GAIN_SAFE       1
+
 /* --- 電流ループ（100kHz、毎スキャン）-----------------------------------
  *  プラント P(s) = Vdc/(s*L)   [A/duty]
- *    fc = fs/30 = 3333Hz、ゼロ = fc/5 = 667Hz
- *    遅れ 1.5*Ts を入れて 位相余裕 60.5度 / ゲイン余裕 13.7dB
- *  単位の鎖： [duty/A] -> [PWMcnt/ADCcnt] は x PERIODmax / ADC_CNT_PER_A  */
+ *    立ち上げ : fc = fs/100 = 1000Hz、ゼロ = fc/5 = 200Hz
+ *               遅れ 1.5*Ts で 位相余裕 73.4度 / ゲイン余裕 24.4dB
+ *    通常     : fc = fs/30 = 3333Hz、ゼロ = fc/5 = 667Hz
+ *               遅れ 1.5*Ts で 位相余裕 60.6度 / ゲイン余裕 13.7dB
+ *  単位の鎖： [duty/A] -> [PWMcnt/ADCcnt] は x PERIODmax / ADC_CNT_PER_A
+ *  （右のコメントの数値は 立ち上げ / 通常）                               */
+#if (GAIN_SAFE == 1)
+#define FC_I_HZ         (FS_HZ/100.0)   /* 1000 Hz */
+#else
 #define FC_I_HZ         (FS_HZ/30.0)    /* 3333 Hz */
+#endif
 #define FZ_I_HZ         (FC_I_HZ/5.0)
-#define KP_I_PHYS       (PI2*FC_I_HZ*L_H/VDC_V)                 /* 0.09520  */
-#define KI_I_PHYS       (KP_I_PHYS*PI2*FZ_I_HZ)                 /* 398.9    */
-#define KP_I_CNT        (KP_I_PHYS*PERIODmax/ADC_CNT_PER_A)     /* 3.6825   */
-#define KIT_I_CNT       (KI_I_PHYS*TS_S*PERIODmax/ADC_CNT_PER_A)/* 0.15425  */
+#define KP_I_PHYS       (PI2*FC_I_HZ*L_H/VDC_V)                 /* 0.02856 / 0.09520 */
+#define KI_I_PHYS       (KP_I_PHYS*PI2*FZ_I_HZ)                 /* 35.89   / 398.8   */
+#define KP_I_CNT        (KP_I_PHYS*PERIODmax/ADC_CNT_PER_A)     /* 1.1047  / 3.6825  */
+#define KIT_I_CNT       (KI_I_PHYS*TS_S*PERIODmax/ADC_CNT_PER_A)/* 0.01388 / 0.15425 */
 /* シフト量の根拠
- *   (a) 死にゾーン   : Ki*T = 0.154 -> 小数 2.7bit 必要 -> S >= 9
- *   (b) オーバーフロー: e をフルスケール 4095 で評価、余裕 8 倍 -> S <= 14
- *   (c) int16 係数   : |A|*2^S < 32767 -> S <= 13
- *   -> 9 <= S <= 13 の範囲で分解能を取り 13。FC_I_HZ を上げると (c) を破って
- *      KI_A が int16 を超えるので、そのときは S を下げること。            */
+ *  立ち上げ（fc = 1000Hz）
+ *   (a) 死にゾーン   : Ki*T = 0.0139 -> 小数 6.2bit 必要 -> S >= 13
+ *   (b) オーバーフロー: e をフルスケール 4095 で評価、余裕 8 倍 -> S <= 15
+ *   (c) int16 係数   : |A|*2^S < 32767 -> S <= 14
+ *   -> 13 <= S <= 14 なので 14（Ki の整数化誤差 0.2%）
+ *     ★Ki*T が小さいので S を 13 未満にすると積分がほぼ効かなくなる。
+ *  通常（fc = 3333Hz）
+ *   (a) Ki*T = 0.154 -> S >= 9 / (b) S <= 14 / (c) S <= 13 -> 13
+ *  FC_I_HZ を変えたら (a) と (c) を必ず見直すこと。                       */
+#if (GAIN_SAFE == 1)
+#define SH_I            14
+#else
 #define SH_I            13
-#define KI_A            ((int32_t)((KP_I_CNT + KIT_I_CNT/2.0)*(1L<<SH_I)))  /* 30798 */
-#define KI_B            ((int32_t)((KP_I_CNT - KIT_I_CNT/2.0)*(1L<<SH_I)))  /* 29534 */
+#endif
+#define KI_A            ((int32_t)((KP_I_CNT + KIT_I_CNT/2.0)*(1L<<SH_I)))  /* 18213 / 30798 */
+#define KI_B            ((int32_t)((KP_I_CNT - KIT_I_CNT/2.0)*(1L<<SH_I)))  /* 17986 / 29534 */
 
 /* --- 乗算器 Iref = (Vrec * Ipk) >> SH_MUL ------------------------------
  *  Vrec が入力ピークのとき Iref が電流ピーク指令になるようにスケールする。
@@ -388,21 +435,36 @@ static void holdGatesOff(void);
 
 /* --- PFC電圧ループ（50Hz = 移動平均が確定したときだけ）-----------------
  *  プラント P(s) = Vac_pk/(2*Vo*C*s)   [V/(Ipk の単位)]
- *    fc = 2Hz、ゼロ = fc/5 = 0.4Hz   -> 位相余裕 56.9度
+ *    立ち上げ : fc = 1Hz、ゼロ = fc/5 = 0.2Hz -> 位相余裕 67.9度 / GM 18.3dB
+ *    通常     : fc = 2Hz、ゼロ = fc/5 = 0.4Hz -> 位相余裕 56.9度 / GM 12.1dB
+ *    （遅れ 1.5*Tv = 30ms を含む。C = 6mF、入力 100Vrms）
  *  ★離散化の T は 1/F_LINE（20ms）であって 1/FS ではない。
  *  ★C_OUT_F を変えたらゲインは自動で追従する（C を 2 倍にすればプラント
  *    利得が半分になるので、ゲインを 2 倍しないと帯域が下がる）。
  *  ★出力が指令に届かないとき FC_V_HZ を上げてはいけない（発散する方向）。*/
+#if (GAIN_SAFE == 1)
+#define FC_V_HZ         1.0
+#else
 #define FC_V_HZ         2.0
+#endif
 #define FZ_V_HZ         (FC_V_HZ/5.0)
-#define G_V0            (VAC_PK_V/(2.0*VO_REF_V*C_OUT_F))      /* 188.86    */
-#define KP_V_PHYS       (PI2*FC_V_HZ/G_V0)                     /* 0.066537  */
-#define KI_V_PHYS       (KP_V_PHYS*PI2*FZ_V_HZ)                /* 0.1672    */
-#define KP_V_CNT        (KP_V_PHYS/VO_CNT_PER_V*MULCONV)       /* 0.30786   */
-#define KIT_V_CNT       (KI_V_PHYS/(double)F_LINE_HZ/VO_CNT_PER_V*MULCONV) /* 0.015474 */
-#define SH_V            16          /* (a) Ki*T=0.0158 -> S>=12 / (c) S<=16 */
-#define KV_A            ((int32_t)((KP_V_CNT + KIT_V_CNT/2.0)*(1L<<SH_V)))  /* 20683 */
-#define KV_B            ((int32_t)((KP_V_CNT - KIT_V_CNT/2.0)*(1L<<SH_V)))  /* 19668 */
+/* 右のコメントの数値は 立ち上げ / 通常（C = 6mF） */
+#define G_V0            (VAC_PK_V/(2.0*VO_REF_V*C_OUT_F))      /* 245.52              */
+#define KP_V_PHYS       (PI2*FC_V_HZ/G_V0)                     /* 0.025591 / 0.051183 */
+#define KI_V_PHYS       (KP_V_PHYS*PI2*FZ_V_HZ)                /* 0.03216  / 0.12864  */
+#define KP_V_CNT        (KP_V_PHYS/VO_CNT_PER_V*MULCONV)       /* 0.11841  / 0.23682  */
+#define KIT_V_CNT       (KI_V_PHYS/(double)F_LINE_HZ/VO_CNT_PER_V*MULCONV) /* 0.002976 / 0.011904 */
+/* シフト量の根拠
+ *  立ち上げ : (a) Ki*T = 0.0030 -> S >= 12 / (c) |A|*2^S < 32767 -> S <= 17
+ *             (b) IPK_MAX_MUL << 17 = 5.2e8 < 2^31 -> 17（Ki 誤差 0.02%）
+ *  通常     : (a) Ki*T = 0.0119 -> S >= 10 / (c) S <= 17 -> 16             */
+#if (GAIN_SAFE == 1)
+#define SH_V            17
+#else
+#define SH_V            16
+#endif
+#define KV_A            ((int32_t)((KP_V_CNT + KIT_V_CNT/2.0)*(1L<<SH_V)))  /* 15714 / 15910 */
+#define KV_B            ((int32_t)((KP_V_CNT - KIT_V_CNT/2.0)*(1L<<SH_V)))  /* 15324 / 15129 */
 
 /* --- 電流振幅指令の上限 ------------------------------------------------ */
 #define IPK_RATED_A     (2.0*PO_RATED_W/(ETA*VAC_PK_V))     /*  7.30 A      */
@@ -455,7 +517,7 @@ static void holdGatesOff(void);
  *   ★この基板では AN3 が ILsense なので、添付の開ループのように
  *     ボリューム R20 で位相を振ることはできない。R20 は AN3 に
  *     繋がっていたが、いまは電流センサが使っている。
- *     ツマミで振りたい場合は、空いている AN4〜AN10 のどれかに
+ *     ツマミで振りたい場合は、空いている AN4～AN10 のどれかに
  *     ボリュームを配線し、ADTRIG で PWM4 トリガにしてから
  *     その ADCBUFn を読んで wPhase_cmd に入れること。
  *
@@ -466,7 +528,7 @@ static void holdGatesOff(void);
  *     カウント = 角度 x 26.67
  *
  *   ★PS_SLEW_CNT のスルーレート制限が効くので、大きな値を書き込んでも
- *     一気には飛ばない（4 カウント/ISR なら 0〜4800 まで 12ms）。
+ *     一気には飛ばない（4 カウント/ISR なら 0～4800 まで 12ms）。
  *     偏磁対策がそのまま手動操作の保護にもなっている。
  *
  *   ※PH_MODE = 1（位相の低速トリム）のときは閉ループ側がこの変数を
@@ -475,7 +537,7 @@ static void holdGatesOff(void);
 
 /* ボリュームで位相を振る（AN4 = RB9 = 80ピンの 21 番）-------------------
  *   0 : 使わない（既定）
- *   1 : AN4 に繋いだボリュームで位相を決める。0〜4095 が 0〜180度。
+ *   1 : AN4 に繋いだボリュームで位相を決める。0～4095 が 0～180度。
  *
  *   ●配線
  *     開発ボードの R20 を AN3 から外し、RB9（AN4）へ繋ぎ替える。
@@ -490,7 +552,7 @@ static void holdGatesOff(void);
  *     CNPUB/CNPDB = 0（プルアップ・プルダウン無し）
  *     変更が要るのは ANSELB を 0x0001 -> 0x0201（RB9 をアナログに）と、
  *     ADTRIG1Lbits.TRGSRC4 を PWM4 にすることの 2 つだけ。
- *     AN4 は共有 ADC コアが変換して ADCBUF4 に入る（専用コアは AN0〜AN3）。
+ *     AN4 は共有 ADC コアが変換して ADCBUF4 に入る（専用コアは AN0～AN3）。
  *
  *   ●換算
  *     ADCBUF4 = 0 -> 0度 / 1024 -> 45度 / 2048 -> 90度 / 4095 -> 180度   */
@@ -561,7 +623,7 @@ static void holdGatesOff(void);
  *        ・RD6/RC3 は今は高インピーダンスの入力で、何も出していない。
  *          TRISD / TRISC で入力のまま、LAT も 0 なので、他の回路に
  *          静的な信号を出してしまっている心配が無い。
- *        ・CLC の入力にもなっていないので、CLC1〜CLC4 の出力は変わらない。
+ *        ・CLC の入力にもなっていないので、CLC1～CLC4 の出力は変わらない。
  *        ・ただし PWM5 は CMP1 トリップの通知（_PWM5Interrupt / pwm5_hits）に
  *          使っていた。鏡にすると Fault 無効（FLTMOD = 3）にせざるを得ないので
  *          ★ハード過電流の回数カウントが使えなくなる★。保護そのものは
@@ -639,7 +701,7 @@ static void holdGatesOff(void);
  *      ★Vcs1 != Vcs2 の差がそのまま直流として一次巻線に加わる★
  *
  *  Vcs1 と Vcs2 は商用半周期ごとに交互に充電されるので 100Hz で逆相に
- *  振れる（Cs = 1.5uF で 195〜245V = 50Vpp）。この条件を数値で積むと
+ *  振れる（Cs = 1.5uF で 195～245V = 50Vpp）。この条件を数値で積むと
  *
  *      1 周期あたりの直流 V*s = 250 uV*s
  *      本来の交流スイング     = Vcs*φ*Ts = 850 uV*s
@@ -723,7 +785,7 @@ static void holdGatesOff(void);
  *         C >= I_pri * D1 * Ts / dV_allow
  *           I_pri 5.6A, D1*Ts 3.87us, dV 10V  ->  2.2uF
  *         漏れインダクタンス 5uH との共振が fsw(100kHz) より十分下に
- *         なるよう 2.2〜4.7uF（48〜33kHz）。フィルム、250V 以上。
+ *         なるよう 2.2～4.7uF（48～33kHz）。フィルム、250V 以上。
  *     ※直列コンデンサを入れたら PS_TRIM_EN は 0 に戻すこと（二重に
  *       補正すると逆に偏る）。
  *
@@ -733,7 +795,7 @@ static void holdGatesOff(void);
  *   ・Vcs1 / Vcs2 をセンスしてトリムを閉ループにする。
  *     ★この基板にはセンス回路が無い★（センス信号は VL_sense / VN_sense /
  *       Vo_sense / ILsense の 4 つだけ。回路図で確認した）
- *     AN4〜AN10 が空いているので、分圧 + バッファを足せば自動化できる。
+ *     AN4～AN10 が空いているので、分圧 + バッファを足せば自動化できる。
  *     そのときは上の式をそのまま毎周期回せばよい。
  * ======================================================================= */
 #define PS_TRIM_EN      0           /* 1 = 偏磁トリムを有効にする          */
@@ -751,7 +813,7 @@ static void holdGatesOff(void);
 #define VS_LIMIT_EN     0
 #define TR_N1           20          /* 一次巻数                            */
 #define TR_AE_MM2       100.0       /* コア実効断面積 [mm^2]               */
-#define TR_BMAX_T       0.25        /* 許容磁束密度 [T]（Bs の 60〜70%）   */
+#define TR_BMAX_T       0.25        /* 許容磁束密度 [T]（Bs の 60～70%）   */
 #define VCS_MAX_V       250.0       /* Vcs の最大値 [V]                    */
 #define VS_MAX_VS       (TR_BMAX_T*TR_N1*TR_AE_MM2*1.0e-6)
 #define D1_VS_MAX_CNT   ((int)(VS_MAX_VS/VCS_MAX_V/TS_S*PERIODmax))
@@ -1478,7 +1540,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
             Uv   = Uv + KV_A*Ev - KV_B*Ev_1;
             Ev_1 = Ev;
 
-            /* アンチワインドアップ：出せる範囲は 0 〜 IPK_MAX_MUL */
+            /* アンチワインドアップ：出せる範囲は 0 ～ IPK_MAX_MUL */
             lim = IPK_MAX_MUL << SH_V;
             if (Uv > lim) { Uv = lim; }
             if (Uv < 0)   { Uv = 0;   }
@@ -1538,7 +1600,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
         if (Ui >  lim) { Ui =  lim; }
         if (Ui < -lim) { Ui = -lim; }
 #else
-        /* FF が無いと PI 出力がそのままデューティになるので、0 〜 DUTYmax の
+        /* FF が無いと PI 出力がそのままデューティになるので、0 ～ DUTYmax の
          * 全域を使えないと必要な昇圧比に届かない
          * （20V 入力で 48V を出すにはデューティ 85% が要る）。 */
         lim = (int32_t)DUTYmax << SH_I;
