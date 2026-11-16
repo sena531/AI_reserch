@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buck PFC 通電手順</title>
+<style>
+  @page { size: A4; margin: 10mm 11mm; }
+  * { box-sizing: border-box; }
+  html { color: #000; background: #fff; }
+  body {
+    margin: 0 auto; max-width: 188mm; padding: 6mm 4mm;
+    font-family: "Yu Gothic","Meiryo","Hiragino Sans","Noto Sans JP",sans-serif;
+    font-size: 8.3pt; line-height: 1.32;
+  }
+  @media print { body { padding: 0; max-width: none; } }
+
+  header { border-bottom: 2px solid #000; padding-bottom: 3px; margin-bottom: 6px;
+           display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  h1 { font-size: 13pt; margin: 0; letter-spacing: .02em; }
+  .sub { font-size: 7.5pt; color: #333; }
+  .meta { margin-left: auto; font-size: 7.5pt; }
+  .meta span { border-bottom: 1px solid #000; display: inline-block; min-width: 64px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 11px; }
+  .full { grid-column: 1 / -1; }
+
+  section { break-inside: avoid; page-break-inside: avoid; }
+  h2 { font-size: 9.2pt; margin: 0 0 3px; padding: 2px 6px;
+       background: #000; color: #fff; display: flex; align-items: baseline; gap: 6px; }
+  h2 .no { font-family: Consolas,monospace; opacity: .78; }
+  h2.warn { background: #fff; color: #000; border: 1.6px solid #000; padding: 1px 5px; }
+  h2.warn::before { content: "⚠"; }
+
+  ul.chk { list-style: none; padding: 0; margin: 0; }
+  ul.chk > li { position: relative; padding-left: 15px; margin: 1.4px 0; }
+  ul.chk > li::before { content: ""; position: absolute; left: 1px; top: 2.5px;
+       width: 9px; height: 9px; border: 1.2px solid #000; border-radius: 1px; }
+  ol.steps { margin: 0; padding-left: 17px; }
+  ol.steps li { margin: 1.4px 0; }
+
+  code { font-family: Consolas,"Courier New",monospace; font-size: 7.8pt;
+         background: #ececec; padding: 0 3px; border-radius: 2px; }
+
+  table { border-collapse: collapse; width: 100%; margin: 3px 0; font-size: 7.8pt; }
+  th, td { border: 1px solid #000; padding: 2px 4px; vertical-align: top; }
+  th { background: #e4e4e4; text-align: left; font-weight: 600; }
+  td.f { min-width: 44px; }
+  .mono { font-family: Consolas,monospace; }
+
+  .note { border: 1.3px solid #000; padding: 3px 6px; margin: 4px 0 0; font-size: 7.8pt; }
+  .note b { margin-right: 3px; }
+  .stop { border: 1.6px solid #000; background: #f0f0f0; padding: 4px 7px; }
+  .stop ul { margin: 2px 0 0; padding-left: 15px; }
+  footer { margin-top: 5px; padding-top: 3px; border-top: 1px solid #888;
+           font-size: 6.9pt; color: #444; }
+  .done { font-size: 7.5pt; color: #333; margin: 2px 0 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Buck PFC 通電手順（NF EPO2000S）</h1>
+  <div class="sub">ブリッジレスPFC + 位相シフトフルブリッジ ／ dsPIC33EP128GS808 ／ <code>mplab/program/buckpfc_closed.c</code></div>
+  <div class="meta">日付 <span>&nbsp;</span>　担当 <span>&nbsp;</span>　立会 <span>&nbsp;</span></div>
+</header>
+
+<p class="done"><b>確認済み：</b>MPLABプロジェクト登録 ／ CMP1有効化（7A, <code>CMP1DAC=3752</code>）＋ソフト過電流保護 ／ SW1・LED ／ 電流センサ <code>ISENS_OFS=2015</code>・<code>ISENS_V_PER_A=0.200</code> ／ ゲート波形（相補50%・デッドタイム≈700ns・PWM7が139°遅れ）</p>
+
+<div class="grid">
+
+<!-- ============================ -->
+<section>
+  <h2><span class="no">1</span>配線</h2>
+  <ul class="chk">
+    <li><b>JP22 のジャンパを外す</b>（R20 が AN11 を駆動しているため）</li>
+    <li><b>Vo_sense を J22 の真ん中のピンへ</b>（J17-15 でも同じ）</li>
+    <li>IC6 の出力も <b>3.3 V</b> か確認（IC9 だけ直っていないか）</li>
+    <li>VL_sense→J8-2（JP8 外す） ／ VN_sense→J12-2（JP12 外す） ／ ILsense→J23-1</li>
+    <li>Q1→J4"1H" ／ Q2→J5"2H" ／ Q3,Q4→J11"6H","6L" ／ Q6,Q5→J15"7H","7L"</li>
+    <li>PWM1L・PWM2L は<b>繋がない</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="no">2</span>EPO2000S の設定</h2>
+  <table>
+    <tr><th style="width:30%">項目</th><th>設定</th></tr>
+    <tr><td>出力モード</td><td>AC</td></tr>
+    <tr><td><b>周波数</b></td><td><b>50.0 Hz</b>（★下の注記）</td></tr>
+    <tr><td>出力電圧</td><td>0 V から開始</td></tr>
+    <tr><td><b>電流リミット</b></td><td><b>1.0 A rms</b> から。段階的に上げる（定格時 5.2 A rms）</td></tr>
+    <tr><td>ランプ／シーケンス</td><td>機能があれば使う。無ければ手動で段階的に</td></tr>
+  </table>
+  <div class="note"><b>★50Hz</b>プログラムは <code>F_LINE_HZ=50</code> 前提。移動平均の窓 <code>N_VLOOP=2000</code>（20 ms）を商用1周期ちょうどにしてリプルを打ち消している。<b>長崎は 60 Hz 地域</b>なので壁の電源そのままでは窓が合わない。60 Hz で回すなら <code>F_LINE_HZ</code> を 60 に変えること（他の定数は自動追従）。</div>
+</section>
+
+<!-- ============================ -->
+<section>
+  <h2><span class="no">3</span>通電前の構成</h2>
+  <ul class="chk">
+    <li>入力を上げる間は負荷を<b>外しておく</b>。<b>抵抗負荷 50〜100 Ω</b> を手元に用意（★下の注記）</li>
+    <li>ボリューム R12 を<b>絞り切る</b>（<code>ADCBUF2</code> が 0 付近）</li>
+    <li>Vcs1 / Vcs2 に<b>差動プローブ</b>を接続（GND1 と GND2 が別）</li>
+    <li>起動時は開ループ（LD1 緑 消灯・赤 消灯）であることを確認</li>
+    <li>EPO2000S の出力絶縁をマニュアルで確認しておく</li>
+  </ul>
+  <div class="note"><b>★負荷</b><b>ボリュームを上げる前に必ず抵抗負荷を繋ぐ。</b>無負荷で電流指令を出すと電力の行き先が無く、C2 と Cs が充電され続けて Vo が <code>Vcs/n</code> まで、Vcs 自身も上昇して歯止めが効かない。抵抗負荷なら Vo=√(Pin·R) で自然に落ち着く。<b>定電流負荷はこの段階では使わない。</b></div>
+  <div class="note"><b>重要</b>マイコン側に Vcs のセンスが無く<b>ソフト過電圧保護はゼロ</b>。Cs1/Cs2 は 450 V 定格、Q1〜Q6 は 600 V。必ず目視監視すること。</div>
+</section>
+
+<section>
+  <h2><span class="no">4</span>上げながら見る変数</h2>
+  <table>
+    <tr><th style="width:26%">変数</th><th>見たいこと</th></tr>
+    <tr><td class="mono">fault</td><td><b>0 のままか</b>（1 = 過電流、赤 LED 点灯）</td></tr>
+    <tr><td class="mono">vrec_pk</td><td>|vac| ピーク（校正用。20 ms ごとに確定）</td></tr>
+    <tr><td class="mono">vo11_avg</td><td>Vo_sense の 20 ms 平均（開ループでも読める）</td></tr>
+    <tr><td class="mono">Vac / half</td><td>極性が正しく反転しているか</td></tr>
+    <tr><td class="mono">ADCBUF3</td><td>電流。2015 を中心に振れる</td></tr>
+    <tr><td class="mono">sensor_ok</td><td>1 のままか</td></tr>
+    <tr><td class="mono">mode</td><td>開 0 ／ 閉 1</td></tr>
+  </table>
+</section>
+
+<!-- ============================ -->
+<section class="full">
+  <h2><span class="no">5</span>通電手順</h2>
+  <ol class="steps">
+    <li>開ループ・無負荷のまま、出力 <b>10 V</b> を印加。<b>出力波形が暴れないか</b>確認（プログラマブル電源は容量性・非線形負荷で発振することがある）。電流リミットに当たっていないかも見る</li>
+    <li><b>20 / 40 / 60 / 80 / 100 V</b> と段階的に上げる。各点で <b><code>vrec_pk</code></b>（20 ms ごとに確定するピークホールド）を読み <b><code>VLINE_CNT_PER_V</code> = vrec_pk ÷ 入力ピーク[V]</b> を決める（暫定 9.83）。設定電圧が正確なので<b>傾きと直線性が同時に出せる</b></li>
+    <li>各点で <code>fault</code> = 0、Vcs1 / Vcs2 を確認しながら進む</li>
+    <li>100 V 到達後、出力を一度切って <b>抵抗負荷 50〜100 Ω を接続</b>。電流リミットを 2 A 程度に上げ、再投入</li>
+    <li><b>ボリュームを少しずつ上げて</b>出力を立てる。Vo を電圧計で測りながら <b><code>vo11_avg</code></b> を読む（<b>2 点</b>）→ <b><code>VO_CNT_PER_V</code></b>・<b><code>VO_REF_CNT</code></b> を決める</li>
+    <li>校正値を書き戻して<b>再ビルド・再書き込み</b></li>
+    <li>軽負荷を投入 → <b>SW1 で閉ループ</b>（LD1 緑 点灯）→ 48 V に収束するか</li>
+    <li>電流リミットを上げながら、段階的に定格 10 A まで。EPO2000S の入力電力表示から<b>効率</b>を確認（シミュレーションでは 90 %）</li>
+  </ol>
+  <div class="note"><b>順序</b><b>ボリュームは入力を 100 V まで上げ切ってから触る。</b>電力は Vin × ボリューム位置で決まるので、両方同時に上げると一気に増える。定電流負荷を繋いだまま入力を上げると、低入力で <code>IPK_MAX</code> に張り付いて挙動が読めなくなる。</div>
+</section>
+
+<!-- ============================ -->
+<section>
+  <h2 class="warn">途中で止める条件</h2>
+  <div class="stop">
+    <ul>
+      <li><code>fault</code> が 1 になった（<b>赤 LED 点灯</b>）</li>
+      <li><b>Vcs1 / Vcs2 が 400 V に近づいた</b></li>
+      <li>EPO2000S が<b>電流リミットに張り付く</b>／出力波形が歪む・発振する</li>
+      <li>異音・異臭・発熱</li>
+    </ul>
+  </div>
+  <div class="note"><b>復帰</b>過電流でラッチしたら、原因を取り除いてから <b>SW1 を押すと解除</b>（モードは変わらない）。</div>
+</section>
+
+<section>
+  <h2 class="warn">定格 480 W の前に判断</h2>
+  <p style="margin:2px 0;">TMCS1107A3B（200 mV/A）を VS=3.3 V で使うと線形範囲は <b>±7.25 A</b>（出力が 3.1 V で頭打ち）。<b>480 W での入力電流ピークは 7.30 A</b> なので、過電流しきい値が通常動作域に入る。立ち上げ中は 7.0 A で問題ないが、定格前に下のいずれかを選ぶ。</p>
+  <table>
+    <tr><th style="width:12%">案</th><th>内容</th></tr>
+    <tr><td><b>A</b></td><td><code>I_OCP_A</code> を上げる → 保護が実質無効。ピーク付近でセンサが飽和し電流ループが多少歪む</td></tr>
+    <tr><td><b>B</b></td><td>定格を <b>430 W 程度</b>に下げる</td></tr>
+    <tr><td><b>C</b></td><td><b>TMCS1107A2B</b>（100 mV/A、±14.5 A）に交換 → <code>ISENS_V_PER_A</code>=0.100、<code>ISENS_OFS</code> 再測定</td></tr>
+  </table>
+</section>
+
+<!-- ============================ -->
+<section class="full">
+  <h2><span class="no">6</span>校正値の記録</h2>
+  <table>
+    <tr>
+      <th style="width:19%">校正定数</th><th style="width:8%">暫定値</th>
+      <th>測定メモ</th><th style="width:12%">採用値</th>
+    </tr>
+    <tr><td class="mono">VLINE_CNT_PER_V</td><td class="mono">9.83</td>
+      <td>20V→<code>vrec_pk</code>＝____　40V→____　60V→____　80V→____　100V→____　　→ 傾き＝____ ／ 直線性 OK・NG</td><td class="f">&nbsp;</td></tr>
+    <tr><td class="mono">VO_CNT_PER_V</td><td class="mono">77.58</td>
+      <td>Vo＝____V → <code>vo11_avg</code>＝____　／　Vo＝____V → <code>vo11_avg</code>＝____　　→ 傾き＝(cnt2−cnt1)/(V2−V1)</td><td class="f">&nbsp;</td></tr>
+    <tr><td class="mono">VO_REF_CNT</td><td class="mono">3724</td>
+      <td>48 V のときのカウント値</td><td class="f">&nbsp;</td></tr>
+    <tr><td class="mono">VCS_FF_V</td><td class="mono">220</td>
+      <td>Vcs1 平均の実測（任意。合わせると電圧ピーク付近の歪みが減る）</td><td class="f">&nbsp;</td></tr>
+    <tr><td>効率</td><td>90 %</td>
+      <td>Pin＝____W（EPO2000S 読み）　Pout＝____V × ____A ＝____W</td><td class="f">&nbsp;</td></tr>
+  </table>
+</section>
+
+</div>
+
+<footer>
+NF EPO2000S：AC 0〜300 V / 5〜550 Hz / 2 kVA ／ 定格 AC100V・出力 48V 480W ／ fs = 100 kHz（PTPER 9600） ／ n = 4 ／ D1 = 0.387（139°, PHASE = 3718） ／ C2 = 7.8 mF ／ Cs1,Cs2 = 3 µF ／ 電流ループ 100 kHz・電圧ループ 50 Hz（20 ms 移動平均）
+</footer>
+
+</body>
+</html>

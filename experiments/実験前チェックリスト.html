@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buck PFC 実機実験 事前チェックリスト</title>
+<style>
+  @page { size: A4; margin: 14mm 16mm; }
+  * { box-sizing: border-box; }
+  html { color: #111; background: #fff; }
+  body {
+    margin: 0 auto;
+    max-width: 180mm;
+    padding: 10mm 6mm;
+    font-family: "Yu Gothic", "Meiryo", "Hiragino Sans", "Noto Sans JP", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+  @media print {
+    body { padding: 0; max-width: none; }
+    a { color: inherit; text-decoration: none; }
+  }
+
+  header { border-bottom: 2px solid #111; padding-bottom: 6px; margin-bottom: 14px; }
+  h1 { font-size: 17pt; margin: 0 0 2px; letter-spacing: 0.02em; }
+  .sub { font-size: 9.5pt; color: #444; }
+  .meta { display: flex; gap: 24px; margin-top: 8px; font-size: 10pt; }
+  .meta span { border-bottom: 1px solid #111; min-width: 120px; display: inline-block; }
+
+  section { margin-bottom: 16px; break-inside: avoid; page-break-inside: avoid; }
+  h2 {
+    font-size: 12.5pt; margin: 0 0 6px;
+    padding: 3px 8px; background: #111; color: #fff;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  h2 .no { font-family: "Consolas", monospace; font-size: 11pt; opacity: 0.8; }
+  h2.warn { background: #fff; color: #111; border: 2px solid #111; }
+  h2.warn::before { content: "★"; }
+
+  ul.chk { list-style: none; padding: 0; margin: 0; }
+  ul.chk > li {
+    position: relative; padding-left: 24px; margin: 3px 0;
+  }
+  ul.chk > li::before {
+    content: ""; position: absolute; left: 3px; top: 4px;
+    width: 12px; height: 12px; border: 1.4px solid #111; border-radius: 2px;
+  }
+  ul.chk ul { list-style: none; padding-left: 14px; margin: 2px 0; }
+  ul.chk ul li { margin: 1px 0; }
+  ul.chk ul li::before { content: "– "; color: #666; }
+
+  code, pre {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 9.5pt;
+  }
+  code { background: #eee; padding: 0 4px; border-radius: 2px; }
+  pre {
+    background: #f3f3f3; border-left: 3px solid #999;
+    padding: 6px 10px; margin: 6px 0 6px 24px; overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  .note {
+    margin: 6px 0 4px 24px; padding: 6px 10px;
+    border: 1px solid #111; font-size: 9.5pt;
+  }
+  .note b { display: inline-block; margin-right: 4px; }
+
+  table {
+    border-collapse: collapse; width: 100%; margin: 6px 0 8px 0;
+    font-size: 9.5pt;
+  }
+  th, td { border: 1px solid #111; padding: 4px 6px; vertical-align: top; }
+  th { background: #eee; font-weight: 600; text-align: left; }
+  td.fill { min-width: 90px; }
+  td.mono, th.mono { font-family: "Consolas", monospace; }
+
+  .order {
+    margin-top: 18px; padding: 8px 12px; border: 2px solid #111;
+    font-size: 11pt; text-align: center;
+  }
+  .order b { font-size: 12pt; }
+  footer { margin-top: 12px; font-size: 8.5pt; color: #555; border-top: 1px solid #999; padding-top: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Buck PFC 実機実験 事前チェックリスト</h1>
+  <div class="sub">ブリッジレスPFC + 位相シフトフルブリッジ AC-DC コンバータ　／　dsPIC33EP128GS808 DEVELOPMENT BOARD　／　<code>mplab/program/buckpfc_closed.c</code></div>
+  <div class="meta">
+    <div>日付：<span>&nbsp;</span></div>
+    <div>担当：<span>&nbsp;</span></div>
+    <div>立会：<span>&nbsp;</span></div>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<section>
+  <h2><span class="no">1</span>MPLAB プロジェクトへの登録</h2>
+  <p style="margin:0 0 4px 24px;">現状は <code>Buck_OPENPI.c</code> だけがビルド対象。新しいソースは<b>未登録</b>。</p>
+  <ul class="chk">
+    <li><code>Source Files</code> 右クリック → <b>Add Existing Item…</b> → <code>mplab/program/buckpfc_closed.c</code> を追加</li>
+    <li><code>Buck_OPENPI.c</code> 右クリック → Properties → <b>Exclude from build</b> にチェック（<code>main()</code> の重複回避）</li>
+    <li><code>traps.c</code> も追加（任意。暴走時の原因追跡が楽になる）</li>
+    <li>ビルドが通ることを確認</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2 class="warn"><span class="no">2</span>過電流保護 CMP1 の確認と有効化（最優先）</h2>
+  <p style="margin:0 0 4px 24px;"><code>initCMP()</code> の中で比較器が<b>止まっている</b>：</p>
+<pre>    CMP1CONbits.CMPON = 0;  //Disenable CMP1
+    //CMP1CONbits.CMPON = 1;  //Enable CMP1   ← コメントアウトされている</pre>
+  <ul class="chk">
+    <li>回路図で <b>CMP1D に入っている信号</b>を確認（IL_sense か、別のシャント系か）
+      <ul><li>確認結果：＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿</li></ul>
+    </li>
+    <li>しきい値を決める。TMCS1107A3（100 mV/A、中点 1.65 V）なら<br>
+      <code>CMP1DAC = (1.65 + I_trip × 0.1) / 3.3 × 4096</code><br>
+      例：15 A トリップ → 3.15 V → <b><code>CMP1DAC = 3910</code></b>
+      <ul><li>採用値：I_trip = ＿＿＿＿ A　→　CMP1DAC = ＿＿＿＿</li></ul>
+    </li>
+    <li><code>CMP1CONbits.CMPON = 1;</code> に変更してビルド・書き込み</li>
+  </ul>
+  <div class="note"><b>注意</b>現在の <code>main()</code> の <code>CMP1DAC = 1000</code>（0.81 V）は<b>中点 1.65 V より低い</b>ので、そのまま有効化すると起動直後にトリップする。</div>
+  <div class="note"><b>注意</b>これが済むまでは主回路に通電しない。スライダックの電流計・外付けヒューズ・電流制限（白熱電球など）で保護すること。</div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2><span class="no">3</span>ボード固有の設定確認</h2>
+  <table>
+    <tr><th style="width:26%">定数</th><th style="width:14%">現在値</th><th>確認内容</th><th style="width:14%">結果</th></tr>
+    <tr><td class="mono">SW1_ACTIVE_LOW</td><td class="mono">1</td><td>SW1（RE4）は押すと Lo になる配線か。逆なら <code>0</code> に</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="mono">LED1_LAT</td><td class="mono">LATEbits.LATE9</td><td><b>仮置き</b>（判明しているのは LED2 = RE10 のみ）。ボードのマニュアルで LED1 のピンを確認。使わないなら <code>USE_MODE_LED 0</code></td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="mono">PHASE_BASE</td><td class="mono">PERIODmax (9600)</td><td><code>closed1.c</code> は 9424 だった。位相がずれて見えたら 9424 に戻す</td><td class="fill">&nbsp;</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2><span class="no">4</span>無通電でゲート波形を確認</h2>
+  <p style="margin:0 0 4px 24px;">主回路に電源を入れず、マイコンとゲートドライバだけ動かす。</p>
+  <ul class="chk">
+    <li>PWM6 / PWM7：相補 50 %、デッドタイム 約 625 ns</li>
+    <li>Q6 が Q3 に対して <b>約 139° 遅れ</b>（<code>D1_FIX_CNT = 3718</code>）　実測：＿＿＿＿°</li>
+    <li>SW1 を押して離す → LED1 が切り替わり、PHASE6 / PHASE7 の遅れレグが入れ替わる</li>
+    <li>Q1 / Q2 は入力が無いので <code>Vac ≈ 0</code> → 零クロス扱いで<b>両方停止</b>していること</li>
+  </ul>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2><span class="no">5</span>通電（スライダック 0 → 100 V）</h2>
+  <p style="margin:0 0 4px 24px;"><b>開ループ・無負荷・ボリューム絞った状態</b>で開始。</p>
+  <ul class="chk">
+    <li>Vcs1 / Vcs2 に<b>オシロまたは DMM を常時接続</b>（マイコン側にセンス無し＝ソフト保護ゼロ。Cs は 450 V 定格、Q1〜Q6 は 600 V）</li>
+    <li><code>ISENS_OFS</code>：入力を切った状態で ADCBUF3 を読み、その値に置換</li>
+    <li>スライダックを数点で止めながら ADCBUF0 のピークを読み、<code>VLINE_CNT_PER_V</code> の<b>傾きと直線性</b>を確認</li>
+    <li>100 V 到達後、ボリュームを少し上げて出力を立て、Vo を電圧計で測りながら ADCBUF2 を読む（2 点）→ <code>VO_CNT_PER_V</code>・<code>VO_REF_CNT</code> を決定</li>
+    <li>校正値を書き戻して再ビルド・再書き込み</li>
+    <li>負荷を軽めに投入 → SW1 で閉ループへ → Vo が 48 V に収束するか</li>
+    <li>段階的に定格 10 A まで</li>
+  </ul>
+
+  <table>
+    <tr><th style="width:26%">校正定数</th><th style="width:14%">暫定値</th><th>測定メモ</th><th style="width:16%">実測・採用値</th></tr>
+    <tr><td class="mono">ISENS_OFS</td><td class="mono">2048</td><td>入力 OFF 時の ADCBUF3</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="mono">VLINE_CNT_PER_V</td><td class="mono">9.83</td><td>Vin = ＿＿ V → ADCBUF0 pk = ＿＿<br>Vin = ＿＿ V → ADCBUF0 pk = ＿＿<br>Vin = ＿＿ V → ADCBUF0 pk = ＿＿</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="mono">VO_CNT_PER_V</td><td class="mono">77.58</td><td>Vo = ＿＿ V → ADCBUF2 = ＿＿<br>Vo = ＿＿ V → ADCBUF2 = ＿＿</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="mono">VO_REF_CNT</td><td class="mono">3724</td><td>48 V のときのカウント</td><td class="fill">&nbsp;</td></tr>
+    <tr><td class="mono">VCS_FF_V</td><td class="mono">220</td><td>Vcs1 平均の実測（任意。合わせるとピーク付近の歪みが減る）</td><td class="fill">&nbsp;</td></tr>
+  </table>
+
+  <div class="note"><b>順序の注意</b>
+    <ul style="margin:2px 0 0; padding-left:18px;">
+      <li>定電流負荷を繋いだまま入力を上げない（低入力で <code>IPK_MAX</code> に張り付き、挙動が読めなくなる）</li>
+      <li>開ループでは 電力 ∝ Vin × ボリューム。<b>入力を上げるときはボリュームを絞る</b></li>
+      <li>閉ループへの切り替えは <b>100 V 到達後</b></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<section>
+  <h2><span class="no">6</span>あれば安心なもの（任意）</h2>
+  <ul class="chk">
+    <li>Vcs1 を分圧して空き ADC チャネルへ → ソフトで過電圧保護がかけられる</li>
+    <li><code>VCS_FF_V</code>（220 V）を実機の Vcs1 平均に合わせる</li>
+  </ul>
+</section>
+
+<div class="order">
+  実施順序：<b>1 → 2 → 3 → 4 → 5</b>　　<b>2 が終わるまで主回路に通電しない</b>
+</div>
+
+<footer>
+  定格：AC 100 V / 出力 48 V, 480 W　／　fs = 100 kHz　／　n = 4　／　D1 = 0.387（139°）　／　C2 = 7.8 mF　／　Cs1, Cs2 = 3 µF
+</footer>
+
+</body>
+</html>

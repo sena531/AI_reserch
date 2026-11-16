@@ -1,0 +1,6213 @@
+{
+  "CircuitObjects": [
+    {
+      "Category": "Diode",
+      "Symbol": "D1",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "OnResistance": "100m",
+        "OffResistance": "1M",
+        "TurnOnVoltage": "700m",
+        "MaximumCharge": "0"
+      }
+    },
+    {
+      "Category": "Diode",
+      "Symbol": "D2",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "OnResistance": "100m",
+        "OffResistance": "1M",
+        "TurnOnVoltage": "700m",
+        "MaximumCharge": "0"
+      }
+    },
+    {
+      "Category": "ACVoltageSource",
+      "Symbol": "VAC",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Voltage": "100",
+        "Frequency": "50",
+        "InitialPhase": "0",
+        "Mode": "Sin"
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_653f12b0-84fe-42dc-9806-5443f6613644"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_316aaa4b-871d-470f-b9ce-095f8f99ad61",
+      "From": {
+        "ObjectSymbol": "Q2",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_653f12b0-84fe-42dc-9806-5443f6613644",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_384f68db-3445-4eef-b237-f6cd31f77831",
+      "From": {
+        "ObjectSymbol": "CrossPoint_653f12b0-84fe-42dc-9806-5443f6613644",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "D2",
+        "PortName": "Port1"
+      }
+    },
+    {
+      "Category": "Ground",
+      "Symbol": "GND",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ]
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_97f81bd6-b263-4d2d-b6fd-42395454bae5",
+      "From": {
+        "ObjectSymbol": "GND",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_1b193e59-7ff3-4a57-911a-fe8312442b68",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_1b193e59-7ff3-4a57-911a-fe8312442b68"
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_d35a8d81-3ed4-4bc6-98e7-376411d7d810"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_bd241c95-c55a-46a5-aed9-729ce77d341b",
+      "From": {
+        "ObjectSymbol": "CrossPoint_1b193e59-7ff3-4a57-911a-fe8312442b68",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_d35a8d81-3ed4-4bc6-98e7-376411d7d810",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_2b16cee1-85f0-4525-aa10-8975a50f0ac5",
+      "From": {
+        "ObjectSymbol": "CrossPoint_d35a8d81-3ed4-4bc6-98e7-376411d7d810",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "Q2",
+        "PortName": "Port1"
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_8131eab4-033d-4945-9f36-cca4d7f395dc"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_77b38825-473a-4e86-9bdf-b23cb2d96d20",
+      "From": {
+        "ObjectSymbol": "D1",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_8131eab4-033d-4945-9f36-cca4d7f395dc",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_b8d91635-cc1b-41c7-8e3c-936b31309249",
+      "From": {
+        "ObjectSymbol": "CrossPoint_8131eab4-033d-4945-9f36-cca4d7f395dc",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "D2",
+        "PortName": "Port0"
+      }
+    },
+    {
+      "Category": "DCCurrentSource",
+      "Symbol": "IDC",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Current": "1.25"
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_e0cd8940-4d28-40fa-9c05-d621737d29d1"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_7adf88ff-0800-4aa2-b83d-5289cbd2e0c2",
+      "From": {
+        "ObjectSymbol": "C",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_e0cd8940-4d28-40fa-9c05-d621737d29d1",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_68bf85b5-6f88-4e99-a6a8-7ca7e7e78b44",
+      "From": {
+        "ObjectSymbol": "CrossPoint_e0cd8940-4d28-40fa-9c05-d621737d29d1",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_d35a8d81-3ed4-4bc6-98e7-376411d7d810",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_a8167d4d-7e6c-46fe-9ed0-a00528756850"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_a5623853-7f8b-490a-b011-68f1e6cf6c75",
+      "From": {
+        "ObjectSymbol": "C",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_a8167d4d-7e6c-46fe-9ed0-a00528756850",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_e30123bc-a5b1-49c9-9018-a7faa82ea1c7",
+      "From": {
+        "ObjectSymbol": "CrossPoint_a8167d4d-7e6c-46fe-9ed0-a00528756850",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_8131eab4-033d-4945-9f36-cca4d7f395dc",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "CurrentProbe",
+      "Symbol": "iL",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Revision": 2,
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_a5b5737d-bcd6-44b0-bb3c-d837a489d13f",
+      "From": {
+        "ObjectSymbol": "iL",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_b392381c-6725-489a-8df1-3decef29ef3b",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_b392381c-6725-489a-8df1-3decef29ef3b"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_220fdb92-16dc-497a-b24d-ede7c3ba326f",
+      "From": {
+        "ObjectSymbol": "Q1",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_b392381c-6725-489a-8df1-3decef29ef3b",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_aec4b0c5-5741-45a2-8003-6eb84c753ab2",
+      "From": {
+        "ObjectSymbol": "CrossPoint_b392381c-6725-489a-8df1-3decef29ef3b",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "D1",
+        "PortName": "Port1"
+      }
+    },
+    {
+      "Category": "IVConverter",
+      "Symbol": "IVS",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        },
+        {
+          "Name": "Port2",
+          "Priority": 3
+        },
+        {
+          "Name": "Port3",
+          "Priority": 2
+        }
+      ],
+      "Parameters": {
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "VoltageProbe",
+      "Symbol": "OUT",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Revision": 2,
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_9eba3845-e54c-498c-a6ce-4d0ff803f3b6",
+      "From": {
+        "ObjectSymbol": "iL",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "IVS",
+        "PortName": "Port1"
+      }
+    },
+    {
+      "Category": "Ground3",
+      "Symbol": "GND1",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ]
+    },
+    {
+      "Category": "SmallFarJumper",
+      "Symbol": "FarJumper_8a46bc38-c062-41f3-add3-2cde384444e4",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "FarJumperSymbol": "IL_sence"
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_2c1d9bfa-951d-43cc-be0a-0571b1a78fe5"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_66823766-0f3f-4f92-ab8e-79091dbdb918",
+      "From": {
+        "ObjectSymbol": "IDC",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_2c1d9bfa-951d-43cc-be0a-0571b1a78fe5",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_470c68da-cda6-4f55-a4bd-0004a046cb97",
+      "From": {
+        "ObjectSymbol": "CrossPoint_2c1d9bfa-951d-43cc-be0a-0571b1a78fe5",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_a8167d4d-7e6c-46fe-9ed0-a00528756850",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_8cd1fc6d-8998-4dea-bb95-dd9407846a7a"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_2ab2c79c-1f95-4b89-99d1-f28c2dc72fdf",
+      "From": {
+        "ObjectSymbol": "IDC",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_8cd1fc6d-8998-4dea-bb95-dd9407846a7a",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_c3bb78c7-b290-4f52-8203-8c84a8d38ff0",
+      "From": {
+        "ObjectSymbol": "CrossPoint_8cd1fc6d-8998-4dea-bb95-dd9407846a7a",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_e0cd8940-4d28-40fa-9c05-d621737d29d1",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "IsolationAmplifier",
+      "Symbol": "VS",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        },
+        {
+          "Name": "Port2",
+          "Priority": 3
+        },
+        {
+          "Name": "Port3",
+          "Priority": 2
+        }
+      ],
+      "Parameters": {
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_5373699c-80d7-4257-ad8b-ebcefaa098a0",
+      "From": {
+        "ObjectSymbol": "VS",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_195758a1-7ca9-4f81-b02e-9aec1c727ff6",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_195758a1-7ca9-4f81-b02e-9aec1c727ff6"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_89d3c2c9-4cbe-4305-be70-d0357740edb6",
+      "From": {
+        "ObjectSymbol": "OUT",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_195758a1-7ca9-4f81-b02e-9aec1c727ff6",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_11f23b92-2b40-49f8-8d2c-cbe652865ced",
+      "From": {
+        "ObjectSymbol": "CrossPoint_195758a1-7ca9-4f81-b02e-9aec1c727ff6",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_2c1d9bfa-951d-43cc-be0a-0571b1a78fe5",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_970183c7-5ca6-4ec7-95d7-79648293d8ba",
+      "From": {
+        "ObjectSymbol": "VS",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_87146ca4-4ef2-4695-b955-66681fd5f2c5",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_87146ca4-4ef2-4695-b955-66681fd5f2c5"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_733a9f90-9a6f-4709-8e02-a6ed1f35855f",
+      "From": {
+        "ObjectSymbol": "OUT",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_87146ca4-4ef2-4695-b955-66681fd5f2c5",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_e712c236-8372-43fa-b220-7ff7647aed63",
+      "From": {
+        "ObjectSymbol": "CrossPoint_87146ca4-4ef2-4695-b955-66681fd5f2c5",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_8cd1fc6d-8998-4dea-bb95-dd9407846a7a",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Ground3",
+      "Symbol": "GND2",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ]
+    },
+    {
+      "Category": "SmallFarJumper",
+      "Symbol": "FarJumper_b57856d4-3cb4-400b-81ca-9c129253c6f8",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "FarJumperSymbol": "Vo_sence"
+      }
+    },
+    {
+      "Category": "Inductor",
+      "Symbol": "L",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Inductance": "350u",
+        "InitialCurrent": "0",
+        "HasEsr": true,
+        "Esr": "10m",
+        "Revision": 2,
+        "Turn": "1",
+        "Length": "100m",
+        "Area": "1m",
+        "Bm2PcvTable": {
+          "Name": "",
+          "Bm": [],
+          "Values": []
+        },
+        "CycleDevice": ""
+      }
+    },
+    {
+      "Category": "Capacitor",
+      "Symbol": "C",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Capacitance": "1.2m",
+        "InitialVoltage": "0",
+        "HasEsr": true,
+        "Esr": "80m",
+        "Esl": "0",
+        "InitialCurrent": "0"
+      }
+    },
+    {
+      "Category": "SmallFarJumper",
+      "Symbol": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed7",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "FarJumperSymbol": "VL"
+      }
+    },
+    {
+      "Category": "SmallFarJumper",
+      "Symbol": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed71",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "FarJumperSymbol": "VN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_c88ecdd8-2251-4c86-be10-3387b965cbeb",
+      "From": {
+        "ObjectSymbol": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed71",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_3f6539d4-77f2-40d9-a9b3-fb62f00d2c54",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_3f6539d4-77f2-40d9-a9b3-fb62f00d2c54"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_81f3ae5a-e0a9-4db8-b19a-d42d01025e21",
+      "From": {
+        "ObjectSymbol": "VAC",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_3f6539d4-77f2-40d9-a9b3-fb62f00d2c54",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_5fa1c69f-4b20-430e-b3b7-a83534555a7f",
+      "From": {
+        "ObjectSymbol": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed7",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_9ab05def-3ad6-4b66-8e49-68e7d251035c",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_9ab05def-3ad6-4b66-8e49-68e7d251035c"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_1ae8c7a6-18d9-4ae0-a34d-561bf4c368b4",
+      "From": {
+        "ObjectSymbol": "VAC",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_9ab05def-3ad6-4b66-8e49-68e7d251035c",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_e29b0f1f-41ec-4125-9911-7a0d7c91d6c8",
+      "From": {
+        "ObjectSymbol": "IVS",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "L",
+        "PortName": "Port1"
+      }
+    },
+    {
+      "Category": "PwmSwitch",
+      "Symbol": "Q1",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "OnResistance": "100m",
+        "OffResistance": "1M",
+        "InitialState": "On",
+        "Mode": "Ratio",
+        "Transitions": [
+          0.5
+        ],
+        "Revision": 2,
+        "HasBodyDiode": true,
+        "Ronb": "100m",
+        "Roffb": "1M",
+        "Vonb": "1",
+        "Qmaxb": "0"
+      }
+    },
+    {
+      "Category": "PwmSwitch",
+      "Symbol": "Q2",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "OnResistance": "100m",
+        "OffResistance": "1M",
+        "InitialState": "On",
+        "Mode": "Ratio",
+        "Transitions": [
+          0.5
+        ],
+        "Revision": 2,
+        "HasBodyDiode": true,
+        "Ronb": "100m",
+        "Roffb": "1M",
+        "Vonb": "1",
+        "Qmaxb": "0"
+      }
+    },
+    {
+      "Category": "VoltageProbe",
+      "Symbol": "VN",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Revision": 2,
+        "Gain": "1"
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_f777b43d-9974-4bca-a961-f87dd9423456"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_b49cbdad-6da0-40f9-a8e7-4682ef053057",
+      "From": {
+        "ObjectSymbol": "Q1",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_f777b43d-9974-4bca-a961-f87dd9423456",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_f3187c9b-6ced-4ef3-82b6-eea8a3bc82b3",
+      "From": {
+        "ObjectSymbol": "CrossPoint_f777b43d-9974-4bca-a961-f87dd9423456",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_1b193e59-7ff3-4a57-911a-fe8312442b68",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_55262cb6-e3d8-4cb3-b2b9-8621eb7a4c0a",
+      "From": {
+        "ObjectSymbol": "VN",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_5dbdb83f-bf3f-44f9-9d1c-bba7035d458b",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_5dbdb83f-bf3f-44f9-9d1c-bba7035d458b"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_d0410403-7683-46e6-84fb-4518a0ff70d6",
+      "From": {
+        "ObjectSymbol": "CrossPoint_3f6539d4-77f2-40d9-a9b3-fb62f00d2c54",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_5dbdb83f-bf3f-44f9-9d1c-bba7035d458b",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_d084f9e5-f1cd-4642-958d-744ca2ee82e5",
+      "From": {
+        "ObjectSymbol": "CrossPoint_5dbdb83f-bf3f-44f9-9d1c-bba7035d458b",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_653f12b0-84fe-42dc-9806-5443f6613644",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "VoltageProbe",
+      "Symbol": "VL",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Revision": 2,
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_cce11bc7-d2be-45a6-b5c2-2e666d7c88ef",
+      "From": {
+        "ObjectSymbol": "VL",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_de9c9ed7-4a1c-420e-80ea-8c7feccd810a",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_de9c9ed7-4a1c-420e-80ea-8c7feccd810a"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_ba4776c7-b599-4c8c-8b40-60f081cfa44b",
+      "From": {
+        "ObjectSymbol": "VN",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_de9c9ed7-4a1c-420e-80ea-8c7feccd810a",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_801a52d2-55dc-4a74-9bd5-7b25575ab2f5",
+      "From": {
+        "ObjectSymbol": "CrossPoint_de9c9ed7-4a1c-420e-80ea-8c7feccd810a",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_f777b43d-9974-4bca-a961-f87dd9423456",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_726eed26-a733-4b85-aa7d-b652c088a7ff",
+      "From": {
+        "ObjectSymbol": "VL",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_1cce8f05-8ffb-45d6-9eab-fa1e7b2130fb",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_1cce8f05-8ffb-45d6-9eab-fa1e7b2130fb"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_19f9df25-c96e-4b5e-a0f8-1eebc098abd9",
+      "From": {
+        "ObjectSymbol": "CrossPoint_9ab05def-3ad6-4b66-8e49-68e7d251035c",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_1cce8f05-8ffb-45d6-9eab-fa1e7b2130fb",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_c94824c2-900e-44d5-8f94-05738d715075",
+      "From": {
+        "ObjectSymbol": "CrossPoint_1cce8f05-8ffb-45d6-9eab-fa1e7b2130fb",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "L",
+        "PortName": "Port0"
+      }
+    },
+    {
+      "Category": "VoltageProbe",
+      "Symbol": "ILsence",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Revision": 2,
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_547d8361-f1eb-44eb-a3cf-d2d479d05ed3",
+      "From": {
+        "ObjectSymbol": "ILsence",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_4f796c60-f796-4a6b-a7df-0d0c4e4cd52f",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_4f796c60-f796-4a6b-a7df-0d0c4e4cd52f"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_63ff0930-9e8b-413b-a659-ca6f0ef165d7",
+      "From": {
+        "ObjectSymbol": "IVS",
+        "PortName": "Port2"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_4f796c60-f796-4a6b-a7df-0d0c4e4cd52f",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_f474df62-621d-49e9-b071-066051765712",
+      "From": {
+        "ObjectSymbol": "CrossPoint_4f796c60-f796-4a6b-a7df-0d0c4e4cd52f",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "FarJumper_8a46bc38-c062-41f3-add3-2cde384444e4",
+        "PortName": "Port0"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_43119661-8788-4fdc-9543-6508f24d8c84",
+      "From": {
+        "ObjectSymbol": "ILsence",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_525667eb-b8eb-4538-a27a-85ec7d5fa5da",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_525667eb-b8eb-4538-a27a-85ec7d5fa5da"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_e94fb807-9bd8-4e06-9c11-c6df0bb49d97",
+      "From": {
+        "ObjectSymbol": "GND1",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_525667eb-b8eb-4538-a27a-85ec7d5fa5da",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_73023c5e-91bc-495a-a818-31a1f37a43c6",
+      "From": {
+        "ObjectSymbol": "CrossPoint_525667eb-b8eb-4538-a27a-85ec7d5fa5da",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "IVS",
+        "PortName": "Port3"
+      }
+    },
+    {
+      "Category": "VoltageProbe",
+      "Symbol": "Vosence",
+      "Ports": [
+        {
+          "Name": "Port0",
+          "Priority": 1
+        },
+        {
+          "Name": "Port1",
+          "Priority": 0
+        }
+      ],
+      "Parameters": {
+        "Revision": 2,
+        "Gain": "1"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_802d7cc7-e45d-46b0-bab8-0e9f483f6523",
+      "From": {
+        "ObjectSymbol": "Vosence",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_868323a7-2f06-4f16-86f8-3b37848613bb",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_868323a7-2f06-4f16-86f8-3b37848613bb"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_10d177c0-111e-4047-aef1-3d14b086cbfd",
+      "From": {
+        "ObjectSymbol": "FarJumper_b57856d4-3cb4-400b-81ca-9c129253c6f8",
+        "PortName": "Port0"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_868323a7-2f06-4f16-86f8-3b37848613bb",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_f49631ce-5b78-4a4e-bf8e-daa593123590",
+      "From": {
+        "ObjectSymbol": "CrossPoint_868323a7-2f06-4f16-86f8-3b37848613bb",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "VS",
+        "PortName": "Port2"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_a3600cb2-1cdf-4fd7-af7e-32f86268034e",
+      "From": {
+        "ObjectSymbol": "Vosence",
+        "PortName": "Port1"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_cacca8c3-ecb4-473b-bb78-2171fd7498f2",
+        "PortName": ""
+      }
+    },
+    {
+      "Port": {
+        "Name": "",
+        "Priority": 0
+      },
+      "Category": "CrossPoint",
+      "Symbol": "CrossPoint_cacca8c3-ecb4-473b-bb78-2171fd7498f2"
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_b133e628-0b6d-47c8-9221-dc0d4afe321b",
+      "From": {
+        "ObjectSymbol": "VS",
+        "PortName": "Port3"
+      },
+      "To": {
+        "ObjectSymbol": "CrossPoint_cacca8c3-ecb4-473b-bb78-2171fd7498f2",
+        "PortName": ""
+      }
+    },
+    {
+      "Category": "Wire",
+      "Symbol": "Wire_96a942d6-acd6-4bb1-9942-0cced92b2238",
+      "From": {
+        "ObjectSymbol": "CrossPoint_cacca8c3-ecb4-473b-bb78-2171fd7498f2",
+        "PortName": ""
+      },
+      "To": {
+        "ObjectSymbol": "GND2",
+        "PortName": "Port0"
+      }
+    }
+  ],
+  "DesignMetas": [
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": true,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Right",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "D1",
+      "Category": "",
+      "Bounds": {
+        "X": 5020.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5020.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5020.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "D1",
+      "Bounds": {
+        "X": 5080.0,
+        "Y": 4762.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5080.0,
+        "Y": 4762.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5080.0,
+        "Y": 4762.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 15.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": true,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Right",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "D2",
+      "Category": "",
+      "Bounds": {
+        "X": 5200.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5200.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5200.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "D2",
+      "Bounds": {
+        "X": 5260.0,
+        "Y": 4762.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5260.0,
+        "Y": 4762.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5260.0,
+        "Y": 4762.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 15.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Left",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 8.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 72.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 0.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 0.0
+          }
+        }
+      ],
+      "TopologyPath": "VAC",
+      "Category": "",
+      "Bounds": {
+        "X": 4700.0,
+        "Y": 4810.0,
+        "Width": 40.0,
+        "Height": 80.0
+      },
+      "SnappedBounds": {
+        "X": 4700.0,
+        "Y": 4810.0,
+        "Width": 40.0,
+        "Height": 80.0
+      },
+      "CommittedBounds": {
+        "X": 4700.0,
+        "Y": 4810.0,
+        "Width": 40.0,
+        "Height": 80.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 80.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "VAC",
+      "Bounds": {
+        "X": 4663.0,
+        "Y": 4826.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4663.0,
+        "Y": 4826.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4663.0,
+        "Y": 4826.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 37.0,
+        "Height": 48.0
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_653f12b0-84fe-42dc-9806-5443f6613644",
+      "Bounds": {
+        "X": 5235.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5235.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5235.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -10.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -10.0
+        }
+      ],
+      "TopologyPath": "Wire_316aaa4b-871d-470f-b9ce-095f8f99ad61",
+      "Bounds": {
+        "X": 5240.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5240.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5240.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "TopologyPath": "Wire_384f68db-3445-4eef-b237-f6cd31f77831",
+      "Bounds": {
+        "X": 5240.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5240.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5240.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Bottom",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 0.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 0.0
+          }
+        }
+      ],
+      "TopologyPath": "GND",
+      "Category": "",
+      "Bounds": {
+        "X": 5150.0,
+        "Y": 5010.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5150.0,
+        "Y": 5010.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5150.0,
+        "Y": 5010.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "GND",
+      "Bounds": {
+        "X": 5170.0,
+        "Y": 5050.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5170.0,
+        "Y": 5050.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5170.0,
+        "Y": 5050.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 0.0,
+        "Height": 0.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -30.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -30.0
+        }
+      ],
+      "TopologyPath": "Wire_97f81bd6-b263-4d2d-b6fd-42395454bae5",
+      "Bounds": {
+        "X": 5170.0,
+        "Y": 5010.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5170.0,
+        "Y": 5010.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5170.0,
+        "Y": 5010.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_1b193e59-7ff3-4a57-911a-fe8312442b68",
+      "Bounds": {
+        "X": 5165.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5165.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5165.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_d35a8d81-3ed4-4bc6-98e7-376411d7d810",
+      "Bounds": {
+        "X": 5235.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5235.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5235.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 70.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 70.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_bd241c95-c55a-46a5-aed9-729ce77d341b",
+      "Bounds": {
+        "X": 5170.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5170.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5170.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_2b16cee1-85f0-4525-aa10-8975a50f0ac5",
+      "Bounds": {
+        "X": 5240.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5240.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5240.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_8131eab4-033d-4945-9f36-cca4d7f395dc",
+      "Bounds": {
+        "X": 5235.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5235.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5235.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 180.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 180.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_77b38825-473a-4e86-9bdf-b23cb2d96d20",
+      "Bounds": {
+        "X": 5060.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5060.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5060.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_b8d91635-cc1b-41c7-8e3c-936b31309249",
+      "Bounds": {
+        "X": 5240.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5240.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5240.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": true,
+      "DisplayPlacement": "Left",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 8.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 72.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 0.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 0.0
+          }
+        }
+      ],
+      "TopologyPath": "IDC",
+      "Category": "",
+      "Bounds": {
+        "X": 5410.0,
+        "Y": 4810.0,
+        "Width": 40.0,
+        "Height": 80.0
+      },
+      "SnappedBounds": {
+        "X": 5410.0,
+        "Y": 4810.0,
+        "Width": 40.0,
+        "Height": 80.0
+      },
+      "CommittedBounds": {
+        "X": 5410.0,
+        "Y": 4810.0,
+        "Width": 40.0,
+        "Height": 80.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 80.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "IDC",
+      "Bounds": {
+        "X": 5370.0,
+        "Y": 4834.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5370.0,
+        "Y": 4834.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5370.0,
+        "Y": 4834.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 32.0
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_e0cd8940-4d28-40fa-9c05-d621737d29d1",
+      "Bounds": {
+        "X": 5345.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5345.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5345.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 90.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 90.0
+        }
+      ],
+      "TopologyPath": "Wire_7adf88ff-0800-4aa2-b83d-5289cbd2e0c2",
+      "Bounds": {
+        "X": 5350.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5350.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5350.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -110.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -110.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_68bf85b5-6f88-4e99-a6a8-7ca7e7e78b44",
+      "Bounds": {
+        "X": 5350.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5350.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5350.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_a8167d4d-7e6c-46fe-9ed0-a00528756850",
+      "Bounds": {
+        "X": 5345.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5345.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5345.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "TopologyPath": "Wire_a5623853-7f8b-490a-b011-68f1e6cf6c75",
+      "Bounds": {
+        "X": 5350.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5350.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5350.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -110.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -110.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_e30123bc-a5b1-49c9-9018-a7faa82ea1c7",
+      "Bounds": {
+        "X": 5350.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5350.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5350.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 32.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "iL",
+      "Category": "",
+      "Bounds": {
+        "X": 4990.0,
+        "Y": 4790.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 4990.0,
+        "Y": 4790.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 4990.0,
+        "Y": 4790.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "iL",
+      "Bounds": {
+        "X": 5005.5,
+        "Y": 4774.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5005.5,
+        "Y": 4774.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5005.5,
+        "Y": 4774.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 9.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 30.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 30.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_a5b5737d-bcd6-44b0-bb3c-d837a489d13f",
+      "Bounds": {
+        "X": 5030.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5030.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5030.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_b392381c-6725-489a-8df1-3decef29ef3b",
+      "Bounds": {
+        "X": 5055.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5055.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5055.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -90.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -90.0
+        }
+      ],
+      "TopologyPath": "Wire_220fdb92-16dc-497a-b24d-ede7c3ba326f",
+      "Bounds": {
+        "X": 5060.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5060.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5060.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_aec4b0c5-5741-45a2-8003-6eb84c753ab2",
+      "Bounds": {
+        "X": 5060.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5060.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5060.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": true,
+      "IsFlipedVertical": true,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 0.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 0.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 8.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 72.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 56.0
+          }
+        }
+      ],
+      "TopologyPath": "IVS",
+      "Category": "",
+      "Bounds": {
+        "X": 4890.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 80.0
+      },
+      "SnappedBounds": {
+        "X": 4890.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 80.0
+      },
+      "CommittedBounds": {
+        "X": 4890.0,
+        "Y": 4750.0,
+        "Width": 80.0,
+        "Height": 80.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 80.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "IVS",
+      "Bounds": {
+        "X": 4921.5,
+        "Y": 4734.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4921.5,
+        "Y": 4734.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4921.5,
+        "Y": 4734.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 17.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Right",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "OUT",
+      "Category": "",
+      "Bounds": {
+        "X": 5440.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5440.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5440.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "OUT",
+      "Bounds": {
+        "X": 5500.0,
+        "Y": 4842.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5500.0,
+        "Y": 4842.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5500.0,
+        "Y": 4842.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 24.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_9eba3845-e54c-498c-a6ce-4d0ff803f3b6",
+      "Bounds": {
+        "X": 4990.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4990.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4990.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": true,
+      "IsFlipedVertical": true,
+      "DisplayPlacement": "Bottom",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 0.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 0.0
+          }
+        }
+      ],
+      "TopologyPath": "GND1",
+      "Category": "",
+      "Bounds": {
+        "X": 4970.0,
+        "Y": 4720.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 4970.0,
+        "Y": 4720.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 4970.0,
+        "Y": 4720.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "GND1",
+      "Bounds": {
+        "X": 4990.0,
+        "Y": 4760.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4990.0,
+        "Y": 4760.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4990.0,
+        "Y": 4760.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 0.0,
+        "Height": 0.0
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Right",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 6.0
+          }
+        }
+      ],
+      "TopologyPath": "FarJumper_8a46bc38-c062-41f3-add3-2cde384444e4",
+      "Category": "",
+      "Bounds": {
+        "X": 4910.0,
+        "Y": 4570.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "SnappedBounds": {
+        "X": 4910.0,
+        "Y": 4570.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "CommittedBounds": {
+        "X": 4910.0,
+        "Y": 4570.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 20.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "FarJumper_8a46bc38-c062-41f3-add3-2cde384444e4",
+      "Bounds": {
+        "X": 4950.0,
+        "Y": 4572.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4950.0,
+        "Y": 4572.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4950.0,
+        "Y": 4572.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 44.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_2c1d9bfa-951d-43cc-be0a-0571b1a78fe5",
+      "Bounds": {
+        "X": 5425.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5425.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5425.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "TopologyPath": "Wire_66823766-0f3f-4f92-ab8e-79091dbdb918",
+      "Bounds": {
+        "X": 5430.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5430.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5430.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -80.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -80.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_470c68da-cda6-4f55-a4bd-0004a046cb97",
+      "Bounds": {
+        "X": 5430.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5430.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5430.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_8cd1fc6d-8998-4dea-bb95-dd9407846a7a",
+      "Bounds": {
+        "X": 5425.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5425.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5425.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 90.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 90.0
+        }
+      ],
+      "TopologyPath": "Wire_2ab2c79c-1f95-4b89-99d1-f28c2dc72fdf",
+      "Bounds": {
+        "X": 5430.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5430.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5430.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -80.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -80.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_c3bb78c7-b290-4f52-8203-8c84a8d38ff0",
+      "Bounds": {
+        "X": 5430.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5430.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5430.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 56.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 56.0
+          }
+        }
+      ],
+      "TopologyPath": "VS",
+      "Category": "",
+      "Bounds": {
+        "X": 5550.0,
+        "Y": 4810.0,
+        "Width": 80.0,
+        "Height": 80.0
+      },
+      "SnappedBounds": {
+        "X": 5550.0,
+        "Y": 4810.0,
+        "Width": 80.0,
+        "Height": 80.0
+      },
+      "CommittedBounds": {
+        "X": 5550.0,
+        "Y": 4810.0,
+        "Width": 80.0,
+        "Height": 80.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 80.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "VS",
+      "Bounds": {
+        "X": 5583.0,
+        "Y": 4794.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5583.0,
+        "Y": 4794.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5583.0,
+        "Y": 4794.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 14.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -100.0
+        },
+        {
+          "X": -70.0,
+          "Y": -100.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -100.0
+        },
+        {
+          "X": -70.0,
+          "Y": -100.0
+        }
+      ],
+      "TopologyPath": "Wire_5373699c-80d7-4257-ad8b-ebcefaa098a0",
+      "Bounds": {
+        "X": 5550.0,
+        "Y": 4830.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5550.0,
+        "Y": 4830.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5550.0,
+        "Y": 4830.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_195758a1-7ca9-4f81-b02e-9aec1c727ff6",
+      "Bounds": {
+        "X": 5475.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5475.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5475.0,
+        "Y": 4725.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -80.0
+        }
+      ],
+      "TopologyPath": "Wire_89d3c2c9-4cbe-4305-be70-d0357740edb6",
+      "Bounds": {
+        "X": 5480.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5480.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5480.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_11f23b92-2b40-49f8-8d2c-cbe652865ced",
+      "Bounds": {
+        "X": 5480.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5480.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5480.0,
+        "Y": 4730.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 110.0
+        },
+        {
+          "X": -70.0,
+          "Y": 110.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 110.0
+        },
+        {
+          "X": -70.0,
+          "Y": 110.0
+        }
+      ],
+      "TopologyPath": "Wire_970183c7-5ca6-4ec7-95d7-79648293d8ba",
+      "Bounds": {
+        "X": 5550.0,
+        "Y": 4870.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5550.0,
+        "Y": 4870.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5550.0,
+        "Y": 4870.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_87146ca4-4ef2-4695-b955-66681fd5f2c5",
+      "Bounds": {
+        "X": 5475.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5475.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5475.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 90.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 90.0
+        }
+      ],
+      "TopologyPath": "Wire_733a9f90-9a6f-4709-8e02-a6ed1f35855f",
+      "Bounds": {
+        "X": 5480.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5480.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5480.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_e712c236-8372-43fa-b220-7ff7647aed63",
+      "Bounds": {
+        "X": 5480.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5480.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5480.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Bottom",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 4.0,
+            "Y": 0.0
+          },
+          "RelativeLocation": {
+            "X": 16.0,
+            "Y": 0.0
+          }
+        }
+      ],
+      "TopologyPath": "GND2",
+      "Category": "",
+      "Bounds": {
+        "X": 5650.0,
+        "Y": 5000.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5650.0,
+        "Y": 5000.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5650.0,
+        "Y": 5000.0,
+        "Width": 40.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "GND2",
+      "Bounds": {
+        "X": 5670.0,
+        "Y": 5040.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5670.0,
+        "Y": 5040.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5670.0,
+        "Y": 5040.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 0.0,
+        "Height": 0.0
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Bottom",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 6.0
+          }
+        }
+      ],
+      "TopologyPath": "FarJumper_b57856d4-3cb4-400b-81ca-9c129253c6f8",
+      "Category": "",
+      "Bounds": {
+        "X": 5700.0,
+        "Y": 4740.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "SnappedBounds": {
+        "X": 5700.0,
+        "Y": 4740.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "CommittedBounds": {
+        "X": 5700.0,
+        "Y": 4740.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 20.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "FarJumper_b57856d4-3cb4-400b-81ca-9c129253c6f8",
+      "Bounds": {
+        "X": 5695.5,
+        "Y": 4760.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5695.5,
+        "Y": 4760.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5695.5,
+        "Y": 4760.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 49.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "L",
+      "Category": "",
+      "Bounds": {
+        "X": 4780.0,
+        "Y": 4790.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 4780.0,
+        "Y": 4790.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 4780.0,
+        "Y": 4790.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "L",
+      "Bounds": {
+        "X": 4797.5,
+        "Y": 4758.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4797.5,
+        "Y": 4758.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4797.5,
+        "Y": 4758.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 45.0,
+        "Height": 32.0
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Left",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "C",
+      "Category": "",
+      "Bounds": {
+        "X": 5310.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5310.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5310.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "C",
+      "Bounds": {
+        "X": 5288.0,
+        "Y": 4834.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5288.0,
+        "Y": 4834.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5288.0,
+        "Y": 4834.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 42.0,
+        "Height": 32.0
+      }
+    },
+    {
+      "Angle": 270.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 6.0
+          }
+        }
+      ],
+      "TopologyPath": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed7",
+      "Category": "",
+      "Bounds": {
+        "X": 4700.0,
+        "Y": 4750.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "SnappedBounds": {
+        "X": 4700.0,
+        "Y": 4750.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "CommittedBounds": {
+        "X": 4700.0,
+        "Y": 4750.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 20.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed7",
+      "Bounds": {
+        "X": 4713.5,
+        "Y": 4724.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4713.5,
+        "Y": 4724.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4713.5,
+        "Y": 4724.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 13.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Bottom",
+      "SymbolVisibility": false,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 6.0
+          }
+        }
+      ],
+      "TopologyPath": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed71",
+      "Category": "",
+      "Bounds": {
+        "X": 4700.0,
+        "Y": 4930.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "SnappedBounds": {
+        "X": 4700.0,
+        "Y": 4930.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "CommittedBounds": {
+        "X": 4700.0,
+        "Y": 4930.0,
+        "Width": 40.0,
+        "Height": 20.0
+      },
+      "ActualSize": {
+        "Width": 40.0,
+        "Height": 20.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "FarJumper_7ca2138e-a5e3-440b-adb5-b4e138bcbed71",
+      "Bounds": {
+        "X": 4712.0,
+        "Y": 4960.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4712.0,
+        "Y": 4960.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4712.0,
+        "Y": 4960.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 16.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -0.0,
+          "Y": -30.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -0.0,
+          "Y": -30.0
+        }
+      ],
+      "TopologyPath": "Wire_c88ecdd8-2251-4c86-be10-3387b965cbeb",
+      "Bounds": {
+        "X": 4720.0,
+        "Y": 4920.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4720.0,
+        "Y": 4920.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4720.0,
+        "Y": 4920.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_3f6539d4-77f2-40d9-a9b3-fb62f00d2c54",
+      "Bounds": {
+        "X": 4715.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4715.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4715.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_81f3ae5a-e0a9-4db8-b19a-d42d01025e21",
+      "Bounds": {
+        "X": 4720.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4720.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4720.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -0.0,
+          "Y": 30.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -0.0,
+          "Y": 30.0
+        }
+      ],
+      "TopologyPath": "Wire_5fa1c69f-4b20-430e-b3b7-a83534555a7f",
+      "Bounds": {
+        "X": 4720.0,
+        "Y": 4780.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4720.0,
+        "Y": 4780.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4720.0,
+        "Y": 4780.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_9ab05def-3ad6-4b66-8e49-68e7d251035c",
+      "Bounds": {
+        "X": 4715.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4715.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4715.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_1ae8c7a6-18d9-4ae0-a34d-561bf4c368b4",
+      "Bounds": {
+        "X": 4720.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4720.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4720.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -30.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -30.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_e29b0f1f-41ec-4125-9911-7a0d7c91d6c8",
+      "Bounds": {
+        "X": 4890.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4890.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4890.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": true,
+      "DisplayPlacement": "Left",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "Q1",
+      "Category": "",
+      "Bounds": {
+        "X": 5020.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5020.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5020.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "Q1",
+      "Bounds": {
+        "X": 5024.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5024.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5024.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 16.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": true,
+      "DisplayPlacement": "Left",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "Q2",
+      "Category": "",
+      "Bounds": {
+        "X": 5200.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5200.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5200.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "Q2",
+      "Bounds": {
+        "X": 5204.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5204.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5204.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 16.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Right",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "VN",
+      "Category": "",
+      "Bounds": {
+        "X": 4850.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 4850.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 4850.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "VN",
+      "Bounds": {
+        "X": 4910.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4910.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4910.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 16.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_f777b43d-9974-4bca-a961-f87dd9423456",
+      "Bounds": {
+        "X": 5055.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5055.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5055.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_b49cbdad-6da0-40f9-a8e7-4682ef053057",
+      "Bounds": {
+        "X": 5060.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5060.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5060.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 110.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 110.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_f3187c9b-6ced-4ef3-82b6-eea8a3bc82b3",
+      "Bounds": {
+        "X": 5060.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5060.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5060.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": -0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -10.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": -0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -10.0
+        }
+      ],
+      "TopologyPath": "Wire_55262cb6-e3d8-4cb3-b2b9-8621eb7a4c0a",
+      "Bounds": {
+        "X": 4890.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4890.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4890.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_5dbdb83f-bf3f-44f9-9d1c-bba7035d458b",
+      "Bounds": {
+        "X": 4885.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4885.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4885.0,
+        "Y": 4885.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 170.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 170.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_d0410403-7683-46e6-84fb-4518a0ff70d6",
+      "Bounds": {
+        "X": 4720.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4720.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4720.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 350.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 350.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_d084f9e5-f1cd-4642-958d-744ca2ee82e5",
+      "Bounds": {
+        "X": 4890.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4890.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4890.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Right",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "VL",
+      "Category": "",
+      "Bounds": {
+        "X": 4760.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 4760.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 4760.0,
+        "Y": 4920.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "VL",
+      "Bounds": {
+        "X": 4820.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4820.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4820.0,
+        "Y": 4932.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 13.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 90.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 90.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_cce11bc7-d2be-45a6-b5c2-2e666d7c88ef",
+      "Bounds": {
+        "X": 4800.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4800.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4800.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_de9c9ed7-4a1c-420e-80ea-8c7feccd810a",
+      "Bounds": {
+        "X": 4885.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4885.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4885.0,
+        "Y": 4975.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": -0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": -0.0
+        }
+      ],
+      "TopologyPath": "Wire_ba4776c7-b599-4c8c-8b40-60f081cfa44b",
+      "Bounds": {
+        "X": 4890.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4890.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4890.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 170.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 170.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_801a52d2-55dc-4a74-9bd5-7b25575ab2f5",
+      "Bounds": {
+        "X": 4890.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4890.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4890.0,
+        "Y": 4980.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": -90.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": -90.0
+        }
+      ],
+      "TopologyPath": "Wire_726eed26-a733-4b85-aa7d-b652c088a7ff",
+      "Bounds": {
+        "X": 4800.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4800.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4800.0,
+        "Y": 4900.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_1cce8f05-8ffb-45d6-9eab-fa1e7b2130fb",
+      "Bounds": {
+        "X": 4775.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4775.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4775.0,
+        "Y": 4805.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 60.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 60.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_19f9df25-c96e-4b5e-a0f8-1eebc098abd9",
+      "Bounds": {
+        "X": 4720.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4720.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4720.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_c94824c2-900e-44d5-8f94-05738d715075",
+      "Bounds": {
+        "X": 4780.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4780.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4780.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 0.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "ILsence",
+      "Category": "",
+      "Bounds": {
+        "X": 4910.0,
+        "Y": 4630.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 4910.0,
+        "Y": 4630.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 4910.0,
+        "Y": 4630.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "ILsence",
+      "Bounds": {
+        "X": 4930.5,
+        "Y": 4614.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4930.5,
+        "Y": 4614.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4930.5,
+        "Y": 4614.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 39.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_547d8361-f1eb-44eb-a3cf-d2d479d05ed3",
+      "Bounds": {
+        "X": 4910.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4910.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4910.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_4f796c60-f796-4a6b-a7df-0d0c4e4cd52f",
+      "Bounds": {
+        "X": 4905.0,
+        "Y": 4645.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4905.0,
+        "Y": 4645.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4905.0,
+        "Y": 4645.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -100.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -100.0
+        }
+      ],
+      "TopologyPath": "Wire_63ff0930-9e8b-413b-a659-ca6f0ef165d7",
+      "Bounds": {
+        "X": 4910.0,
+        "Y": 4750.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4910.0,
+        "Y": 4750.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4910.0,
+        "Y": 4750.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -70.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": -70.0
+        }
+      ],
+      "TopologyPath": "Wire_f474df62-621d-49e9-b071-066051765712",
+      "Bounds": {
+        "X": 4910.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4910.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4910.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 90.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 90.0
+        }
+      ],
+      "TopologyPath": "Wire_43119661-8788-4fdc-9543-6508f24d8c84",
+      "Bounds": {
+        "X": 4990.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4990.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4990.0,
+        "Y": 4650.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_525667eb-b8eb-4538-a27a-85ec7d5fa5da",
+      "Bounds": {
+        "X": 4965.0,
+        "Y": 4735.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 4965.0,
+        "Y": 4735.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 4965.0,
+        "Y": 4735.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        }
+      ],
+      "TopologyPath": "Wire_e94fb807-9bd8-4e06-9c11-c6df0bb49d97",
+      "Bounds": {
+        "X": 4970.0,
+        "Y": 4740.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4970.0,
+        "Y": 4740.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4970.0,
+        "Y": 4740.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 10.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 0.0
+        },
+        {
+          "X": -20.0,
+          "Y": 10.0
+        }
+      ],
+      "TopologyPath": "Wire_73023c5e-91bc-495a-a818-31a1f37a43c6",
+      "Bounds": {
+        "X": 4970.0,
+        "Y": 4740.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 4970.0,
+        "Y": 4740.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 4970.0,
+        "Y": 4740.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Angle": 90.0,
+      "IsFlipedHorizontal": false,
+      "IsFlipedVertical": false,
+      "DisplayPlacement": "Top",
+      "SymbolVisibility": true,
+      "SpecVisibility": true,
+      "UseTemplate": false,
+      "Template": "",
+      "Ports": [
+        {
+          "ConnectorLocation": {
+            "X": 0.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 0.0,
+            "Y": 16.0
+          }
+        },
+        {
+          "ConnectorLocation": {
+            "X": 8.0,
+            "Y": 4.0
+          },
+          "RelativeLocation": {
+            "X": 72.0,
+            "Y": 16.0
+          }
+        }
+      ],
+      "TopologyPath": "Vosence",
+      "Category": "",
+      "Bounds": {
+        "X": 5670.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "SnappedBounds": {
+        "X": 5670.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "CommittedBounds": {
+        "X": 5670.0,
+        "Y": 4830.0,
+        "Width": 80.0,
+        "Height": 40.0
+      },
+      "ActualSize": {
+        "Width": 80.0,
+        "Height": 40.0
+      }
+    },
+    {
+      "Category": "Display",
+      "TopologyPath": "Vosence",
+      "Bounds": {
+        "X": 5688.0,
+        "Y": 4794.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5688.0,
+        "Y": 4794.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5688.0,
+        "Y": 4794.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": 44.0,
+        "Height": 16.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": -10.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": 0.0
+        },
+        {
+          "X": -50.0,
+          "Y": -10.0
+        }
+      ],
+      "TopologyPath": "Wire_802d7cc7-e45d-46b0-bab8-0e9f483f6523",
+      "Bounds": {
+        "X": 5710.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5710.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5710.0,
+        "Y": 4810.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_868323a7-2f06-4f16-86f8-3b37848613bb",
+      "Bounds": {
+        "X": 5655.0,
+        "Y": 4795.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5655.0,
+        "Y": 4795.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5655.0,
+        "Y": 4795.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 50.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 50.0
+        }
+      ],
+      "TopologyPath": "Wire_10d177c0-111e-4047-aef1-3d14b086cbfd",
+      "Bounds": {
+        "X": 5700.0,
+        "Y": 4750.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5700.0,
+        "Y": 4750.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5700.0,
+        "Y": 4750.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 30.0
+        },
+        {
+          "X": -30.0,
+          "Y": 30.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 30.0
+        },
+        {
+          "X": -30.0,
+          "Y": 30.0
+        }
+      ],
+      "TopologyPath": "Wire_f49631ce-5b78-4a4e-bf8e-daa593123590",
+      "Bounds": {
+        "X": 5660.0,
+        "Y": 4800.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5660.0,
+        "Y": 4800.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5660.0,
+        "Y": 4800.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 50.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 0.0
+        },
+        {
+          "X": -40.0,
+          "Y": 50.0
+        }
+      ],
+      "TopologyPath": "Wire_a3600cb2-1cdf-4fd7-af7e-32f86268034e",
+      "Bounds": {
+        "X": 5710.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5710.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5710.0,
+        "Y": 4890.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "CrossPoint",
+      "TopologyPath": "CrossPoint_cacca8c3-ecb4-473b-bb78-2171fd7498f2",
+      "Bounds": {
+        "X": 5665.0,
+        "Y": 4935.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "SnappedBounds": {
+        "X": 5665.0,
+        "Y": 4935.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "CommittedBounds": {
+        "X": 5665.0,
+        "Y": 4935.0,
+        "Width": 10.0,
+        "Height": 10.0
+      },
+      "ActualSize": {
+        "Width": 10.0,
+        "Height": 10.0
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 70.0
+        },
+        {
+          "X": 40.0,
+          "Y": 70.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 70.0
+        },
+        {
+          "X": 40.0,
+          "Y": 70.0
+        }
+      ],
+      "TopologyPath": "Wire_b133e628-0b6d-47c8-9221-dc0d4afe321b",
+      "Bounds": {
+        "X": 5630.0,
+        "Y": 4870.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5630.0,
+        "Y": 4870.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5630.0,
+        "Y": 4870.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    },
+    {
+      "Category": "Wire",
+      "Points": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 60.0
+        }
+      ],
+      "SnappedPoints": [
+        {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        {
+          "X": 0.0,
+          "Y": 60.0
+        }
+      ],
+      "TopologyPath": "Wire_96a942d6-acd6-4bb1-9942-0cced92b2238",
+      "Bounds": {
+        "X": 5670.0,
+        "Y": 4940.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "SnappedBounds": {
+        "X": 5670.0,
+        "Y": 4940.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "CommittedBounds": {
+        "X": 5670.0,
+        "Y": 4940.0,
+        "Width": "NaN",
+        "Height": "NaN"
+      },
+      "ActualSize": {
+        "Width": "NaN",
+        "Height": "NaN"
+      }
+    }
+  ],
+  "Subfrequencies": [
+    {
+      "Name": "fsw",
+      "Frequency": "100k",
+      "InitialTime": "0",
+      "IsFrequencyModulationEnabled": false,
+      "FrequencyModulator": "",
+      "TargetParts": []
+    },
+    {
+      "Name": "fline",
+      "Frequency": "50",
+      "InitialTime": "0",
+      "IsFrequencyModulationEnabled": false,
+      "FrequencyModulator": "",
+      "TargetParts": []
+    }
+  ],
+  "SwitchingSynchronizations": [],
+  "ModelSummary": {
+    "Designer": "sena",
+    "LastUpdateDesigner": "",
+    "CreationTime": "2026-08-13T18:52:05.9532897+09:00",
+    "LastUpdateTime": "2026-08-13T18:52:05.953291+09:00",
+    "Version": "1.0.0",
+    "Description": ""
+  },
+  "MainFrequency": "100k",
+  "SolverSetting": {
+    "Divta": 1,
+    "Divtw": 100,
+    "Fctta": 10,
+    "Divtprf": 10,
+    "Divtmdl": 50,
+    "FetCrss": false,
+    "IgbtCres": true,
+    "FastTail": true
+  },
+  "AnalysisDebug": {
+    "StateOverThreshold": 1000
+  },
+  "Profile": {
+    "TransientProfile": {
+      "Time": "0.01",
+      "IsBurst": true,
+      "SortCvt": false,
+      "DetailSwitch": false
+    },
+    "WaveformProfile": {
+      "TrimTransientChart": false,
+      "BeginTime": "0",
+      "Steady": false,
+      "WaveformTime": "0.01",
+      "Time": "0.12",
+      "IsBurst": true,
+      "SortCvt": false,
+      "DetailSwitch": false
+    },
+    "FraProfile": {
+      "WarmupTime": "0.01",
+      "ACSweepPath": "",
+      "FromOutputPath": "",
+      "ToOutputPath": "",
+      "MinimumFrequency": "10",
+      "MaximumFrequency": "100k",
+      "AppliedVoltage": "0.001",
+      "PhaseFold": true,
+      "SortCvt": false,
+      "Steady": false
+    },
+    "SweepProfile": {
+      "SweepTarget": "Part",
+      "PartPath": null,
+      "Parameter": "",
+      "StartValue": "0",
+      "EndValue": "1",
+      "Division": 10,
+      "Mode": "Transient",
+      "HideTDCharts": false,
+      "Steady": false,
+      "BeginTime": "0",
+      "TrimTransientChart": false,
+      "Time": "0.01",
+      "IsBurst": true,
+      "SortCvt": false,
+      "DetailSwitch": false
+    },
+    "PowerProfile": {
+      "WarmupTime": "0.01",
+      "SwitchMode": "Ideal",
+      "Tolerance": "1",
+      "HideTDCharts": false,
+      "SortCvt": false,
+      "AnalysisCycle": "Switching",
+      "SwitchingBase": "*CVT",
+      "ACFrequency": "0",
+      "SamplingCount": null,
+      "Steady": false,
+      "MinCycle": 1,
+      "MaxCycle": 1000
+    },
+    "OutputChartConfigs": [],
+    "PowerParts": []
+  },
+  "ScriptReferences": [
+    {
+      "Path": "program\\bridgelessPFC_open.sciprc",
+      "Symbol": "bridgelessPFC_open",
+      "Enable": false,
+      "Post": false,
+      "Priority": 0,
+      "FrequencyMode": "MainFrequency",
+      "Frequency": "100k",
+      "SubfrequencyName": ""
+    },
+    {
+      "Path": "..\\..\\OneDrive - Nagasaki University (1)\\デスクトップ\\AI＿研究\\制御＿シミュレーション\\closed_loop_bridgeless_pfc.sciprc",
+      "Symbol": "closed_loop_bridgeless_pfc",
+      "Enable": true,
+      "Post": true,
+      "Priority": 0,
+      "FrequencyMode": "MainFrequency",
+      "Frequency": "100k",
+      "SubfrequencyName": ""
+    }
+  ],
+  "GlobalVariablesReferences": [],
+  "LookupTableReferences": [],
+  "SlcScriptReference": {
+    "Path": "",
+    "Enable": true,
+    "CvtOutput": false,
+    "FrequencyMode": "MainFrequency",
+    "Frequency": "100k",
+    "SubfrequencyName": ""
+  }
+}

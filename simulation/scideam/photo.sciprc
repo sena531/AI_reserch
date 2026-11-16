@@ -1,0 +1,11 @@
+/*
+ * Name:   NewScript.sciprc
+ * Date:   2026/10/26
+ * Author: sena
+ */
+if (t < 0.1){
+	PrgV = 1000*t;
+}else{
+	PrgV = 100;
+}
+

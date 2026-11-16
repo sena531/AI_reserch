@@ -1,0 +1,7 @@
+# ツール固有ファイル（Scideam, KiCad, MPLAB等）は改行コードを含めそのまま保存する
+* -text
+
+# MPLAB(XC16)のソースは Shift-JIS(CP932)。GitHub上で読めるようリポジトリ内は UTF-8 で保存し、
+# チェックアウト時に CP932 に戻す（ローカルの MPLAB X ではこれまで通り表示される）
+firmware/**/*.c text working-tree-encoding=CP932 eol=crlf
+firmware/**/*.h text working-tree-encoding=CP932 eol=crlf

@@ -1,0 +1,33 @@
+# ---- MPLAB X 生成物 ----
+firmware/**/build/
+firmware/**/dist/
+firmware/**/debug/
+firmware/**/.generated_files/
+firmware/**/nbproject/private/
+firmware/**/nbproject/Makefile-*
+firmware/**/nbproject/Package-*.bash
+*.log
+*.log.inx
+
+# ---- KiCad 生成物・ローカル設定 ----
+*-backups/
+.history/
+.history_trim/
+fp-info-cache
+*.kicad_prl
+*.kicad_sch-bak
+*.lck
+_autosave-*
+
+# ---- Python ----
+__pycache__/
+*.pyc
+
+# ---- Office 一時ファイル / OS ----
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---- Claude Code ローカル設定 ----
+.claude/settings.local.json

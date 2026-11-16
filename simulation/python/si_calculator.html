@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>関数電卓（SI接頭辞対応）</title>
+<style>
+  :root {
+    --bg: #1e2126;
+    --panel: #2a2e35;
+    --display-bg: #14161a;
+    --text: #e8eaed;
+    --sub: #9aa0a6;
+    --accent: #4f8cff;
+    --accent-text: #ffffff;
+    --btn: #383d45;
+    --btn-hover: #454b55;
+    --op: #4a4f5a;
+    --op-hover: #5a606c;
+    --prefix: #2e3a4f;
+    --prefix-hover: #3a4a66;
+    --fn: #33404a;
+    --fn-hover: #405160;
+    --danger: #6b3a3a;
+    --danger-hover: #7d4444;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f2f3f5;
+      --panel: #ffffff;
+      --display-bg: #eef0f3;
+      --text: #1c1e21;
+      --sub: #5f6368;
+      --accent: #3b6fe0;
+      --accent-text: #ffffff;
+      --btn: #e4e6ea;
+      --btn-hover: #d7dae0;
+      --op: #dbe0e8;
+      --op-hover: #ccd2dc;
+      --prefix: #dde7fb;
+      --prefix-hover: #cddaf7;
+      --fn: #dfe9e6;
+      --fn-hover: #cfdeda;
+      --danger: #f4d4d4;
+      --danger-hover: #eec0c0;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: "Segoe UI", "Hiragino Sans", "Yu Gothic", sans-serif;
+    color: var(--text);
+  }
+  .app {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 4fr);
+    gap: 12px;
+    height: 100vh;
+    padding: 12px;
+  }
+  .calc, .log {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 4px 10px;
+  }
+  h1 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--sub);
+    letter-spacing: 0.02em;
+  }
+  button.mini {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    height: auto;
+    margin-left: 4px;
+  }
+  .display {
+    background: var(--display-bg);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    flex: 0 0 auto;
+    min-height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 4px;
+    overflow: hidden;
+  }
+  .expr {
+    font-size: clamp(16px, 2.4vh, 26px);
+    color: var(--sub);
+    min-height: 1.3em;
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+  .result {
+    font-size: clamp(30px, 6vh, 64px);
+    font-weight: 600;
+    text-align: right;
+    word-break: break-all;
+    line-height: 1.2;
+  }
+  .eng {
+    font-size: clamp(13px, 2vh, 20px);
+    color: var(--accent);
+    text-align: right;
+    min-height: 1.3em;
+  }
+  .error { color: #e05555; }
+  .result.error { font-size: clamp(18px, 3.2vh, 32px); }
+  .legend {
+    font-size: 11px;
+    color: var(--sub);
+    margin: 0 4px 8px;
+    line-height: 1.5;
+    flex: 0 0 auto;
+  }
+  .keys {
+    flex: 1 1 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .prefixes, .fns, .pad {
+    display: grid;
+    gap: 6px;
+    min-height: 0;
+  }
+  .prefixes { grid-template-columns: repeat(7, 1fr); flex: 1 1 0; }
+  .fns { grid-template-columns: repeat(5, 1fr); grid-auto-rows: 1fr; flex: 4 1 0; }
+  .pad { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; flex: 5 1 0; }
+  .hint {
+    flex: 0 0 auto;
+    font-size: 11px;
+    color: var(--sub);
+    margin: 8px 4px 0;
+    line-height: 1.5;
+  }
+  .loglist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .loglist li {
+    background: var(--display-bg);
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    word-break: break-all;
+  }
+  .loglist li:hover { outline: 1px solid var(--accent); }
+  .loglist .t { font-size: 11px; color: var(--sub); }
+  .loglist .e { font-size: 14px; color: var(--sub); }
+  .loglist .r { font-size: 18px; font-weight: 600; }
+  .loglist .r small { font-size: 12px; font-weight: 400; color: var(--accent); margin-left: 6px; }
+  .loglist .err .r { color: #e05555; font-size: 14px; }
+  .loglist .empty { cursor: default; color: var(--sub); text-align: center; font-size: 13px; }
+  .loglist .empty:hover { outline: none; }
+  @media (max-width: 800px) {
+    .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 3fr) minmax(0, 1fr); }
+  }
+  button {
+    border: none;
+    border-radius: 10px;
+    font-size: clamp(15px, 2.6vh, 28px);
+    padding: 0;
+    cursor: pointer;
+    background: var(--btn);
+    color: var(--text);
+    transition: background 0.1s ease;
+    font-family: inherit;
+  }
+  button:hover { background: var(--btn-hover); }
+  button:active { transform: scale(0.97); }
+  button.op { background: var(--op); }
+  button.op:hover { background: var(--op-hover); }
+  button.prefix {
+    background: var(--prefix);
+    font-size: clamp(14px, 2.4vh, 24px);
+  }
+  button.prefix:hover { background: var(--prefix-hover); }
+  button.fn {
+    background: var(--fn);
+    font-size: clamp(13px, 2.2vh, 24px);
+  }
+  button.fn:hover { background: var(--fn-hover); }
+  button.toggle.active { background: var(--accent); color: var(--accent-text); }
+  button.equals { background: var(--accent); color: var(--accent-text); }
+  button.equals:hover { filter: brightness(1.08); }
+  button.clear, button.back { background: var(--danger); }
+  button.clear:hover, button.back:hover { background: var(--danger-hover); }
+</style>
+</head>
+<body>
+ <div class="app">
+  <div class="calc">
+    <div class="head">
+      <h1>関数電卓（SI接頭辞対応）</h1>
+      <button class="mini" id="btnFull">⛶ 全画面</button>
+    </div>
+    <div class="display">
+      <div class="expr" id="expr">&nbsp;</div>
+      <div class="result" id="result">0</div>
+      <div class="eng" id="eng">&nbsp;</div>
+    </div>
+
+    <div class="legend">
+      p=10⁻¹² n=10⁻⁹ μ/u=10⁻⁶ m=10⁻³ k/K=10³ M=10⁶ G=10⁹ T=10¹²
+    </div>
+
+    <div class="keys">
+    <div class="prefixes">
+      <button class="prefix" data-prefix="p">p</button>
+      <button class="prefix" data-prefix="n">n</button>
+      <button class="prefix" data-prefix="u">μ</button>
+      <button class="prefix" data-prefix="m">m</button>
+      <button class="prefix" data-prefix="k">k</button>
+      <button class="prefix" data-prefix="M">M</button>
+      <button class="prefix" data-prefix="G">G</button>
+    </div>
+
+    <div class="fns" id="fns">
+      <button class="fn toggle" id="btn2nd" data-action="second">2nd</button>
+      <button class="fn toggle" id="btnAngle" data-action="angle">DEG</button>
+      <button class="fn" data-ch="π">π</button>
+      <button class="fn" data-ch="e">e</button>
+      <button class="fn" data-ch="Ans">Ans</button>
+
+      <button class="fn" data-f1="sin(" data-f2="asin(" data-l1="sin" data-l2="sin⁻¹"></button>
+      <button class="fn" data-f1="cos(" data-f2="acos(" data-l1="cos" data-l2="cos⁻¹"></button>
+      <button class="fn" data-f1="tan(" data-f2="atan(" data-l1="tan" data-l2="tan⁻¹"></button>
+      <button class="fn" data-f1="log(" data-f2="10^(" data-l1="log" data-l2="10ˣ"></button>
+      <button class="fn" data-f1="ln(" data-f2="exp(" data-l1="ln" data-l2="eˣ"></button>
+
+      <button class="fn" data-f1="sinh(" data-f2="asinh(" data-l1="sinh" data-l2="sinh⁻¹"></button>
+      <button class="fn" data-f1="cosh(" data-f2="acosh(" data-l1="cosh" data-l2="cosh⁻¹"></button>
+      <button class="fn" data-f1="tanh(" data-f2="atanh(" data-l1="tanh" data-l2="tanh⁻¹"></button>
+      <button class="fn" data-f1="abs(" data-f2="log2(" data-l1="|x|" data-l2="log₂"></button>
+      <button class="fn" data-f1="1/(" data-f2="1/(" data-l1="1/x" data-l2="1/x"></button>
+
+      <button class="fn" data-f1="√(" data-f2="^2" data-l1="√x" data-l2="x²"></button>
+      <button class="fn" data-f1="∛(" data-f2="^3" data-l1="∛x" data-l2="x³"></button>
+      <button class="fn" data-ch="^">xʸ</button>
+      <button class="fn" data-ch="!">n!</button>
+      <button class="fn" data-ch="E">EXP</button>
+    </div>
+
+    <div class="pad">
+      <button class="clear" data-action="clear">C</button>
+      <button class="back" data-action="back">⌫</button>
+      <button data-ch="(">(</button>
+      <button data-ch=")">)</button>
+
+      <button data-ch="7">7</button>
+      <button data-ch="8">8</button>
+      <button data-ch="9">9</button>
+      <button class="op" data-ch="/">÷</button>
+
+      <button data-ch="4">4</button>
+      <button data-ch="5">5</button>
+      <button data-ch="6">6</button>
+      <button class="op" data-ch="*">×</button>
+
+      <button data-ch="1">1</button>
+      <button data-ch="2">2</button>
+      <button data-ch="3">3</button>
+      <button class="op" data-ch="-">−</button>
+
+      <button data-ch="0">0</button>
+      <button data-ch=".">.</button>
+      <button class="equals" data-action="equals">=</button>
+      <button class="op" data-ch="+">+</button>
+    </div>
+    </div>
+
+    <div class="hint">
+      例: 4.7k+10k / 2π×50×10m / sin(30) / √(2)×100n / log(1k) / 5! / 括弧は自動で閉じます。
+      キーボード入力も可（Enter=計算, Esc=クリア）。
+    </div>
+  </div>
+
+  <aside class="log">
+    <div class="head">
+      <h1>計算ログ</h1>
+      <div>
+        <button class="mini" id="btnSaveLog">保存(.txt)</button>
+        <button class="mini" id="btnClearLog">消去</button>
+      </div>
+    </div>
+    <ol class="loglist" id="logList"></ol>
+    <div class="hint">項目をクリックすると式を再入力できます。ログはこのブラウザに自動保存されます。</div>
+  </aside>
+ </div>
+
+<script>
+(function () {
+  const exprEl = document.getElementById('expr');
+  const resultEl = document.getElementById('result');
+  const engEl = document.getElementById('eng');
+  const btn2nd = document.getElementById('btn2nd');
+  const btnAngle = document.getElementById('btnAngle');
+
+  let expr = '';
+  let degMode = true;
+  let secondMode = false;
+  let lastAns = 0;
+
+  const PREFIX_MULT = {
+    'T': 1e12, 'G': 1e9, 'M': 1e6, 'k': 1e3, 'K': 1e3,
+    'm': 1e-3, 'u': 1e-6, 'μ': 1e-6, 'n': 1e-9, 'p': 1e-12, 'f': 1e-15
+  };
+
+  const ENG_STEPS = [
+    [1e15, 'P'], [1e12, 'T'], [1e9, 'G'], [1e6, 'M'], [1e3, 'k'],
+    [1, ''], [1e-3, 'm'], [1e-6, 'μ'], [1e-9, 'n'], [1e-12, 'p'], [1e-15, 'f']
+  ];
+
+  const FUNC_NAMES = [
+    'sqrt', 'cbrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
+    'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
+    'log', 'log2', 'ln', 'exp', 'abs'
+  ];
+  const FUNC_SET = new Set(FUNC_NAMES);
+
+  const BACKSPACE_TOKEN = new RegExp('(?:' + FUNC_NAMES.slice().sort((a, b) => b.length - a.length).join('|') + '|√|∛)\\($|Ans$');
+
+  function isDigit(c) { return c >= '0' && c <= '9'; }
+  function isRunChar(c) { return /[A-Za-zΩ°μ]/.test(c); }
+
+  function isKnownName(s) {
+    return FUNC_SET.has(s) || s === 'e' || s.toLowerCase() === 'pi' || s.toLowerCase() === 'ans';
+  }
+
+  function domainError() { return new Error('定義域エラー'); }
+
+  function tokenize(str) {
+    const tokens = [];
+    let i = 0;
+    while (i < str.length) {
+      const c = str[i];
+      if (c === ' ') { i++; continue; }
+      if ('+-*/^()!'.includes(c)) { tokens.push({ type: 'op', value: c }); i++; continue; }
+      if (c === '×') { tokens.push({ type: 'op', value: '*' }); i++; continue; }
+      if (c === '÷') { tokens.push({ type: 'op', value: '/' }); i++; continue; }
+      if (c === '−') { tokens.push({ type: 'op', value: '-' }); i++; continue; }
+      if (c === 'π') { tokens.push({ type: 'const', value: Math.PI }); i++; continue; }
+      if (c === '√') { tokens.push({ type: 'func', value: 'sqrt' }); i++; continue; }
+      if (c === '∛') { tokens.push({ type: 'func', value: 'cbrt' }); i++; continue; }
+
+      if (isDigit(c) || c === '.') {
+        const start = i;
+        while (i < str.length && (isDigit(str[i]) || str[i] === '.')) i++;
+        // 指数表記 1E3 / 1E-3
+        if (str[i] === 'E') {
+          let j = i + 1;
+          if (str[j] === '+' || str[j] === '-') j++;
+          if (j < str.length && isDigit(str[j])) {
+            while (j < str.length && isDigit(str[j])) j++;
+            i = j;
+          }
+        }
+        const numStr = str.slice(start, i);
+        const val = parseFloat(numStr);
+        if (isNaN(val) || !/^(\d+\.?\d*|\.\d+)(E[+-]?\d+)?$/.test(numStr)) {
+          throw new Error('不正な数値です');
+        }
+        let mult = 1;
+        // 数値直後の英字列: SI接頭辞(+単位) か、関数名・定数(暗黙の乗算)かを判定
+        let j = i;
+        while (j < str.length && isRunChar(str[j])) j++;
+        const run = str.slice(i, j);
+        if (run.length > 0 && !isKnownName(run)) {
+          if (PREFIX_MULT.hasOwnProperty(run[0])) {
+            mult = PREFIX_MULT[run[0]];
+            const rest = run.slice(1);
+            // 接頭辞の直後が関数名・定数なら、そこから先は消費しない (例: 5msin(30))
+            i = isKnownName(rest) ? i + 1 : j;
+          } else {
+            i = j; // 単位のみ (例: 5A, 10Ω)
+          }
+        }
+        tokens.push({ type: 'num', value: val * mult });
+        continue;
+      }
+
+      if (/[A-Za-z]/.test(c)) {
+        const name = str.slice(i).match(/^(?:log2(?=\()|[A-Za-z]+)/)[0];
+        i += name.length;
+        if (FUNC_SET.has(name)) { tokens.push({ type: 'func', value: name }); continue; }
+        if (name === 'e') { tokens.push({ type: 'const', value: Math.E }); continue; }
+        if (name.toLowerCase() === 'pi') { tokens.push({ type: 'const', value: Math.PI }); continue; }
+        if (name.toLowerCase() === 'ans') { tokens.push({ type: 'const', value: lastAns }); continue; }
+        throw new Error('不明な名前: ' + name);
+      }
+      throw new Error('不正な文字: ' + c);
+    }
+    return tokens;
+  }
+
+  function factorial(n) {
+    if (!Number.isInteger(n) || n < 0 || n > 170) throw domainError();
+    let r = 1;
+    for (let k = 2; k <= n; k++) r *= k;
+    return r;
+  }
+
+  function callFunc(name, x) {
+    const k = degMode ? Math.PI / 180 : 1;
+    let r;
+    switch (name) {
+      case 'sqrt': r = Math.sqrt(x); break;
+      case 'cbrt': r = Math.cbrt(x); break;
+      case 'sin': r = Math.sin(x * k); break;
+      case 'cos': r = Math.cos(x * k); break;
+      case 'tan':
+        if (degMode && ((x % 180) + 180) % 180 === 90) throw domainError();
+        r = Math.tan(x * k);
+        break;
+      case 'asin': r = Math.asin(x) / k; break;
+      case 'acos': r = Math.acos(x) / k; break;
+      case 'atan': r = Math.atan(x) / k; break;
+      case 'sinh': r = Math.sinh(x); break;
+      case 'cosh': r = Math.cosh(x); break;
+      case 'tanh': r = Math.tanh(x); break;
+      case 'asinh': r = Math.asinh(x); break;
+      case 'acosh': r = Math.acosh(x); break;
+      case 'atanh': r = Math.atanh(x); break;
+      case 'log': r = Math.log10(x); break;
+      case 'log2': r = Math.log2(x); break;
+      case 'ln': r = Math.log(x); break;
+      case 'exp': r = Math.exp(x); break;
+      case 'abs': r = Math.abs(x); break;
+      default: throw new Error('不明な関数: ' + name);
+    }
+    if (!isFinite(r)) throw domainError();
+    // sin(180°) などの浮動小数点誤差を 0 に丸める
+    if ((name === 'sin' || name === 'cos' || name === 'tan') && Math.abs(r) < 1e-12) {
+      if (!(name !== 'cos' && Math.abs(x * k) < 1e-6)) r = 0;
+    }
+    return r;
+  }
+
+  function parse(tokens) {
+    let pos = 0;
+    const peek = () => tokens[pos];
+    const next = () => tokens[pos++];
+    const isOp = (t, v) => t && t.type === 'op' && t.value === v;
+
+    function parseExpression() {
+      let value = parseTerm();
+      while (isOp(peek(), '+') || isOp(peek(), '-')) {
+        const op = next().value;
+        const rhs = parseTerm();
+        value = op === '+' ? value + rhs : value - rhs;
+      }
+      return value;
+    }
+    function startsOperand(t) {
+      return t && (t.type === 'num' || t.type === 'const' || t.type === 'func' || isOp(t, '('));
+    }
+    function parseTerm() {
+      let value = parseUnary();
+      for (;;) {
+        const t = peek();
+        if (isOp(t, '*')) {
+          next();
+          value = value * parseUnary();
+        } else if (isOp(t, '/')) {
+          next();
+          const rhs = parseUnary();
+          if (rhs === 0) throw new Error('0で割ることはできません');
+          value = value / rhs;
+        } else if (startsOperand(t)) {
+          value = value * parseUnary(); // 暗黙の乗算 (2π, 3(4+5) など)
+        } else {
+          break;
+        }
+      }
+      return value;
+    }
+    function parseUnary() {
+      if (isOp(peek(), '-')) { next(); return -parseUnary(); }
+      if (isOp(peek(), '+')) { next(); return parseUnary(); }
+      return parsePower();
+    }
+    function parsePower() {
+      const base = parsePostfix();
+      if (isOp(peek(), '^')) {
+        next();
+        const exp = parseUnary(); // 右結合
+        const r = Math.pow(base, exp);
+        if (!isFinite(r)) throw domainError();
+        return r;
+      }
+      return base;
+    }
+    function parsePostfix() {
+      let value = parsePrimary();
+      while (isOp(peek(), '!')) { next(); value = factorial(value); }
+      return value;
+    }
+    function parsePrimary() {
+      const tok = peek();
+      if (!tok) throw new Error('式が不完全です');
+      if (tok.type === 'num' || tok.type === 'const') { next(); return tok.value; }
+      if (tok.type === 'func') {
+        next();
+        let arg;
+        if (isOp(peek(), '(')) {
+          arg = parseParen();
+        } else {
+          arg = parseUnary(); // sin30, √9 のような括弧なし
+        }
+        return callFunc(tok.value, arg);
+      }
+      if (isOp(tok, '(')) return parseParen();
+      throw new Error('式が不正です');
+    }
+    function parseParen() {
+      next(); // '('
+      const value = parseExpression();
+      if (peek()) {
+        if (!isOp(peek(), ')')) throw new Error('式が不正です');
+        next();
+      } // 末尾なら閉じ括弧を自動補完
+      return value;
+    }
+
+    const result = parseExpression();
+    if (pos !== tokens.length) throw new Error('式が不正です');
+    return result;
+  }
+
+  function evaluate(str) {
+    const value = parse(tokenize(str));
+    if (!isFinite(value)) throw domainError();
+    return value;
+  }
+
+  function roundSig(num, sig) {
+    if (num === 0 || !isFinite(num)) return num;
+    const d = Math.ceil(Math.log10(Math.abs(num)));
+    const power = sig - d;
+    if (power > 300) return num;
+    const magnitude = Math.pow(10, power);
+    return Math.round(num * magnitude) / magnitude;
+  }
+
+  function formatPlain(num) {
+    if (!isFinite(num)) return num > 0 ? '∞' : (num < 0 ? '-∞' : 'NaN');
+    const rounded = roundSig(num, 10);
+    if (Math.abs(rounded) !== 0 && (Math.abs(rounded) >= 1e15 || Math.abs(rounded) < 1e-9)) {
+      return rounded.toExponential(6).replace(/e\+?/, 'e');
+    }
+    return rounded.toString();
+  }
+
+  function formatEngineering(num) {
+    if (num === 0) return '0';
+    if (!isFinite(num)) return '';
+    const sign = num < 0 ? -1 : 1;
+    const abs = Math.abs(num);
+    for (const [scale, symbol] of ENG_STEPS) {
+      if (abs >= scale) {
+        const mantissa = roundSig(sign * (abs / scale), 6);
+        return mantissa + (symbol ? ' ' + symbol : '');
+      }
+    }
+    const [scale, symbol] = ENG_STEPS[ENG_STEPS.length - 1];
+    const mantissa = roundSig(sign * (abs / scale), 6);
+    return mantissa + ' ' + symbol;
+  }
+
+  function render() {
+    const shown = expr.replace(/\*/g, '×').replace(/\//g, '÷');
+    exprEl.textContent = shown.length ? shown : ' ';
+  }
+
+  function showResult(num) {
+    resultEl.classList.remove('error');
+    resultEl.textContent = formatPlain(num);
+    const eng = formatEngineering(num);
+    engEl.textContent = eng ? '≈ ' + eng : ' ';
+  }
+
+  function showError(msg) {
+    resultEl.classList.add('error');
+    resultEl.textContent = msg;
+    engEl.textContent = ' ';
+  }
+
+  function appendText(s) {
+    expr += s;
+    render();
+  }
+
+  function backspace() {
+    const m = expr.match(BACKSPACE_TOKEN);
+    expr = m ? expr.slice(0, -m[0].length) : expr.slice(0, -1);
+    render();
+  }
+
+  function clearAll() {
+    expr = '';
+    render();
+    resultEl.classList.remove('error');
+    resultEl.textContent = '0';
+    engEl.textContent = ' ';
+  }
+
+  function equals() {
+    if (!expr.trim()) return;
+    try {
+      const value = evaluate(expr);
+      lastAns = value;
+      showResult(value);
+      addLog(expr, formatPlain(value), formatEngineering(value), false);
+    } catch (e) {
+      showError(e.message || 'エラー');
+      addLog(expr, e.message || 'エラー', '', true);
+    }
+  }
+
+  // ---- 計算ログ ----
+  const LOG_KEY = 'siCalcLog.v1';
+  const LOG_MAX = 500;
+  const logListEl = document.getElementById('logList');
+  let logEntries = [];
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+  function stamp(d) {
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) + ' ' +
+      pad2(d.getHours()) + ':' + pad2(d.getMinutes()) + ':' + pad2(d.getSeconds());
+  }
+
+  function loadLog() {
+    try {
+      const raw = localStorage.getItem(LOG_KEY);
+      const arr = raw ? JSON.parse(raw) : [];
+      if (Array.isArray(arr)) logEntries = arr;
+    } catch (e) { logEntries = []; }
+  }
+  function saveLogStore() {
+    try { localStorage.setItem(LOG_KEY, JSON.stringify(logEntries)); } catch (e) { /* 保存不可でも動作は継続 */ }
+  }
+
+  function addLog(expression, result, eng, isError) {
+    logEntries.push({ t: stamp(new Date()), expr: expression, result, eng, err: isError, mode: degMode ? 'DEG' : 'RAD' });
+    if (logEntries.length > LOG_MAX) logEntries.splice(0, logEntries.length - LOG_MAX);
+    saveLogStore();
+    renderLog();
+  }
+
+  function renderLog() {
+    logListEl.textContent = '';
+    if (logEntries.length === 0) {
+      const li = document.createElement('li');
+      li.className = 'empty';
+      li.textContent = 'ログはまだありません';
+      logListEl.appendChild(li);
+      return;
+    }
+    for (let i = logEntries.length - 1; i >= 0; i--) {
+      const en = logEntries[i];
+      const li = document.createElement('li');
+      if (en.err) li.className = 'err';
+      const t = document.createElement('div');
+      t.className = 't';
+      t.textContent = en.t + '  [' + en.mode + ']';
+      const e = document.createElement('div');
+      e.className = 'e';
+      e.textContent = en.expr.replace(/\*/g, '×').replace(/\//g, '÷');
+      const r = document.createElement('div');
+      r.className = 'r';
+      r.textContent = '= ' + en.result;
+      if (en.eng) {
+        const s = document.createElement('small');
+        s.textContent = '≈ ' + en.eng;
+        r.appendChild(s);
+      }
+      li.append(t, e, r);
+      li.addEventListener('click', () => { expr = en.expr; render(); });
+      logListEl.appendChild(li);
+    }
+    logListEl.scrollTop = 0;
+  }
+
+  function downloadLog() {
+    if (logEntries.length === 0) return;
+    const lines = logEntries.map(en =>
+      '[' + en.t + '] [' + en.mode + '] ' + en.expr + ' = ' + en.result + (en.eng ? '  (≈ ' + en.eng + ')' : ''));
+    const blob = new Blob(['﻿' + lines.join('\r\n') + '\r\n'], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    const d = new Date();
+    a.href = URL.createObjectURL(blob);
+    a.download = 'calc_log_' + d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) + '_' +
+      pad2(d.getHours()) + pad2(d.getMinutes()) + pad2(d.getSeconds()) + '.txt';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  function clearLog() {
+    if (logEntries.length === 0) return;
+    if (!window.confirm('計算ログをすべて消去しますか？')) return;
+    logEntries = [];
+    saveLogStore();
+    renderLog();
+  }
+
+  // ---- 全画面 ----
+  const btnFull = document.getElementById('btnFull');
+  function toggleFullscreen() {
+    try {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    } catch (e) { /* 非対応環境では何もしない */ }
+  }
+  document.addEventListener('fullscreenchange', () => {
+    btnFull.textContent = document.fullscreenElement ? '⛶ 全画面解除' : '⛶ 全画面';
+  });
+  btnFull.addEventListener('click', toggleFullscreen);
+  document.getElementById('btnSaveLog').addEventListener('click', downloadLog);
+  document.getElementById('btnClearLog').addEventListener('click', clearLog);
+
+  function refreshFnLabels() {
+    document.querySelectorAll('button[data-f1]').forEach(btn => {
+      btn.textContent = btn.getAttribute(secondMode ? 'data-l2' : 'data-l1');
+    });
+    btn2nd.classList.toggle('active', secondMode);
+    btnAngle.textContent = degMode ? 'DEG' : 'RAD';
+    btnAngle.classList.toggle('active', !degMode);
+  }
+
+  document.querySelectorAll('button[data-ch]').forEach(btn => {
+    btn.addEventListener('click', () => appendText(btn.getAttribute('data-ch')));
+  });
+  document.querySelectorAll('button[data-prefix]').forEach(btn => {
+    btn.addEventListener('click', () => appendText(btn.getAttribute('data-prefix')));
+  });
+  document.querySelectorAll('button[data-f1]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      let text = btn.getAttribute(secondMode ? 'data-f2' : 'data-f1');
+      // 数値の直後に 10^( を入れる場合は乗算を補う
+      if (text === '10^(' && /[0-9.)πe]$/.test(expr)) text = '*' + text;
+      appendText(text);
+    });
+  });
+  document.querySelector('[data-action="clear"]').addEventListener('click', clearAll);
+  document.querySelector('[data-action="back"]').addEventListener('click', backspace);
+  document.querySelector('[data-action="equals"]').addEventListener('click', equals);
+  btn2nd.addEventListener('click', () => { secondMode = !secondMode; refreshFnLabels(); });
+  btnAngle.addEventListener('click', () => { degMode = !degMode; refreshFnLabels(); });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === 'Enter' || e.key === '=') { e.preventDefault(); equals(); return; }
+    if (e.key === 'Backspace') { backspace(); return; }
+    if (e.key === 'Escape') { clearAll(); return; }
+    if (e.key.length === 1 && /[0-9A-Za-zπ√∛+\-*/^().!]/.test(e.key)) {
+      e.preventDefault();
+      appendText(e.key);
+    }
+  });
+
+  // テスト・デバッグ用
+  window.siCalc = {
+    evaluate,
+    setDeg: (v) => { degMode = !!v; refreshFnLabels(); },
+    setAns: (v) => { lastAns = v; }
+  };
+
+  // ボタンにフォーカスを残さない (Space/Enter の二重入力防止)
+  document.addEventListener('mousedown', (e) => { if (e.target.closest('button')) e.preventDefault(); });
+
+  loadLog();
+  renderLog();
+  refreshFnLabels();
+  clearAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+//フェーズシフトフルブリッジ 位相差制御
+
+//メイン周期を取得
+T = param("Ts","Value");
+
+//位相シフト量を設定 [deg]
+//位相のサンプリング
+SwPhase = output("Deg.V","V","AVE");
+
+//入力に対するガード
+if(SwPhase < 0) SwPhase = 0;
+if(SwPhase > 180) SwPhase = 180;
+
+Phase = SwPhase;
+Shift = Phase/360*T;
+setoutvar(Shift);
+
+//右レグを位相シフトする
+setparam("FRD","Tini",Shift);
+
