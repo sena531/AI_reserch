@@ -1,7 +1,7 @@
 /* ===========================================================================
  *  closed_loop_buck_pfc.c
  *
- *  ブリッジレスPFC（Q1/Q2） ＋ 位相シフトフルブリッジ（Q3〜Q6）  閉ループ制御
+ *  ブリッジレスPFC（Q1/Q2） ＋ 位相シフトフルブリッジ（Q3～Q6）  閉ループ制御
  *
  *  ターゲット : dsPIC33EP128GS808 DEVELOPMENT BOARD (DM330026)
  *               MPLAB X + XC16 v1.70
@@ -202,7 +202,7 @@ static void toggle_mode(void);
 #define VLINE_CNT_PER_V 9.83        /* [ADCカウント/V]                      */
 
 /* --- 出力電圧センス（TLP291 フォトカプラ）-------------------------------
- *  TLP291 の CTR は個体差が非常に大きい（50〜600%）ので計算では決まらない。
+ *  TLP291 の CTR は個体差が非常に大きい（50～600%）ので計算では決まらない。
  *  【測り方】開ループで出力を立て、Vo を電圧計で測りながら ADCBUF2 を読む。
  *            2 点取って傾きを出す。
  *              VO_CNT_PER_V = (cnt2 - cnt1) / (V2 - V1)
@@ -1056,7 +1056,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
             Uv   = Uv + KV_A*Ev - KV_B*Ev_1;
             Ev_1 = Ev;
 
-            /* アンチワインドアップ：出せる範囲は 0 〜 IPK_MAX_MUL */
+            /* アンチワインドアップ：出せる範囲は 0 ～ IPK_MAX_MUL */
             lim = IPK_MAX_MUL << SH_V;
             if (Uv > lim) { Uv = lim; }
             if (Uv < 0)   { Uv = 0;   }
@@ -1112,7 +1112,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
         if (Ui >  lim) { Ui =  lim; }
         if (Ui < -lim) { Ui = -lim; }
 #else
-        /* FF が無いと PI 出力がそのままデューティになるので、0 〜 DUTYmax の
+        /* FF が無いと PI 出力がそのままデューティになるので、0 ～ DUTYmax の
          * 全域を使えないと必要な昇圧比に届かない
          * （20V 入力で 48V を出すにはデューティ 85% が要る）。 */
         lim = (int32_t)DUTYmax << SH_I;

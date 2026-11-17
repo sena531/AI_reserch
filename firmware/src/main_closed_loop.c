@@ -1,7 +1,7 @@
 /* ===========================================================================
  *  closed_1103.c
  *
- *  ブリッジレスPFC（Q1/Q2） ＋ 位相シフトフルブリッジ（Q3〜Q6）  閉ループ制御
+ *  ブリッジレスPFC（Q1/Q2） ＋ 位相シフトフルブリッジ（Q3～Q6）  閉ループ制御
  *
  *  ターゲット : dsPIC33EP128GS808 DEVELOPMENT BOARD (DM330026)
  *               MPLAB X + XC16 v1.70
@@ -244,7 +244,7 @@ static void holdGatesOff(void);
  *
  *    ●VO_CNT_PER_V : 動作点での小信号ゲイン（dADC/dVo）
  *        ★原点を通る弦の傾き（2650/48 = 55.2）を使ってはいけない★
- *        この特性は原点を通る直線ではない。44〜52V を最小二乗すると
+ *        この特性は原点を通る直線ではない。44～52V を最小二乗すると
  *            Vosense[mV] = 63.688 * Vo - 923.5
  *        で、動作点の傾きは弦の 1.43 倍ある。
  *        弦の値を入れると電圧ループのゲインが 1.43 倍過大になり、
@@ -252,8 +252,8 @@ static void holdGatesOff(void);
  *        ゲインを決めるのは原点からの傾きではなく動作点の傾き。
  *            63.688 [mV/V] x 4095/3300 = 79.03 [カウント/V]
  *
- *        この領域の直線性は良好（44〜52V で直線からのずれ最大 0.7mV = 1
- *        カウント、40〜56V でも 4.9mV = 6 カウント）なので、動作点まわり
+ *        この領域の直線性は良好（44～52V で直線からのずれ最大 0.7mV = 1
+ *        カウント、40～56V でも 4.9mV = 6 カウント）なので、動作点まわり
  *        の線形モデルで十分。
  *
  *    ●低電圧側は不感帯
@@ -455,7 +455,7 @@ static void holdGatesOff(void);
  *   ★この基板では AN3 が ILsense なので、添付の開ループのように
  *     ボリューム R20 で位相を振ることはできない。R20 は AN3 に
  *     繋がっていたが、いまは電流センサが使っている。
- *     ツマミで振りたい場合は、空いている AN4〜AN10 のどれかに
+ *     ツマミで振りたい場合は、空いている AN4～AN10 のどれかに
  *     ボリュームを配線し、ADTRIG で PWM4 トリガにしてから
  *     その ADCBUFn を読んで wPhase_cmd に入れること。
  *
@@ -466,7 +466,7 @@ static void holdGatesOff(void);
  *     カウント = 角度 x 26.67
  *
  *   ★PS_SLEW_CNT のスルーレート制限が効くので、大きな値を書き込んでも
- *     一気には飛ばない（4 カウント/ISR なら 0〜4800 まで 12ms）。
+ *     一気には飛ばない（4 カウント/ISR なら 0～4800 まで 12ms）。
  *     偏磁対策がそのまま手動操作の保護にもなっている。
  *
  *   ※PH_MODE = 1（位相の低速トリム）のときは閉ループ側がこの変数を
@@ -475,7 +475,7 @@ static void holdGatesOff(void);
 
 /* ボリュームで位相を振る（AN4 = RB9 = 80ピンの 21 番）-------------------
  *   0 : 使わない（既定）
- *   1 : AN4 に繋いだボリュームで位相を決める。0〜4095 が 0〜180度。
+ *   1 : AN4 に繋いだボリュームで位相を決める。0～4095 が 0～180度。
  *
  *   ●配線
  *     開発ボードの R20 を AN3 から外し、RB9（AN4）へ繋ぎ替える。
@@ -490,7 +490,7 @@ static void holdGatesOff(void);
  *     CNPUB/CNPDB = 0（プルアップ・プルダウン無し）
  *     変更が要るのは ANSELB を 0x0001 -> 0x0201（RB9 をアナログに）と、
  *     ADTRIG1Lbits.TRGSRC4 を PWM4 にすることの 2 つだけ。
- *     AN4 は共有 ADC コアが変換して ADCBUF4 に入る（専用コアは AN0〜AN3）。
+ *     AN4 は共有 ADC コアが変換して ADCBUF4 に入る（専用コアは AN0～AN3）。
  *
  *   ●換算
  *     ADCBUF4 = 0 -> 0度 / 1024 -> 45度 / 2048 -> 90度 / 4095 -> 180度   */
@@ -561,7 +561,7 @@ static void holdGatesOff(void);
  *        ・RD6/RC3 は今は高インピーダンスの入力で、何も出していない。
  *          TRISD / TRISC で入力のまま、LAT も 0 なので、他の回路に
  *          静的な信号を出してしまっている心配が無い。
- *        ・CLC の入力にもなっていないので、CLC1〜CLC4 の出力は変わらない。
+ *        ・CLC の入力にもなっていないので、CLC1～CLC4 の出力は変わらない。
  *        ・ただし PWM5 は CMP1 トリップの通知（_PWM5Interrupt / pwm5_hits）に
  *          使っていた。鏡にすると Fault 無効（FLTMOD = 3）にせざるを得ないので
  *          ★ハード過電流の回数カウントが使えなくなる★。保護そのものは
@@ -639,7 +639,7 @@ static void holdGatesOff(void);
  *      ★Vcs1 != Vcs2 の差がそのまま直流として一次巻線に加わる★
  *
  *  Vcs1 と Vcs2 は商用半周期ごとに交互に充電されるので 100Hz で逆相に
- *  振れる（Cs = 1.5uF で 195〜245V = 50Vpp）。この条件を数値で積むと
+ *  振れる（Cs = 1.5uF で 195～245V = 50Vpp）。この条件を数値で積むと
  *
  *      1 周期あたりの直流 V*s = 250 uV*s
  *      本来の交流スイング     = Vcs*φ*Ts = 850 uV*s
@@ -723,7 +723,7 @@ static void holdGatesOff(void);
  *         C >= I_pri * D1 * Ts / dV_allow
  *           I_pri 5.6A, D1*Ts 3.87us, dV 10V  ->  2.2uF
  *         漏れインダクタンス 5uH との共振が fsw(100kHz) より十分下に
- *         なるよう 2.2〜4.7uF（48〜33kHz）。フィルム、250V 以上。
+ *         なるよう 2.2～4.7uF（48～33kHz）。フィルム、250V 以上。
  *     ※直列コンデンサを入れたら PS_TRIM_EN は 0 に戻すこと（二重に
  *       補正すると逆に偏る）。
  *
@@ -733,7 +733,7 @@ static void holdGatesOff(void);
  *   ・Vcs1 / Vcs2 をセンスしてトリムを閉ループにする。
  *     ★この基板にはセンス回路が無い★（センス信号は VL_sense / VN_sense /
  *       Vo_sense / ILsense の 4 つだけ。回路図で確認した）
- *     AN4〜AN10 が空いているので、分圧 + バッファを足せば自動化できる。
+ *     AN4～AN10 が空いているので、分圧 + バッファを足せば自動化できる。
  *     そのときは上の式をそのまま毎周期回せばよい。
  * ======================================================================= */
 #define PS_TRIM_EN      0           /* 1 = 偏磁トリムを有効にする          */
@@ -751,7 +751,7 @@ static void holdGatesOff(void);
 #define VS_LIMIT_EN     0
 #define TR_N1           20          /* 一次巻数                            */
 #define TR_AE_MM2       100.0       /* コア実効断面積 [mm^2]               */
-#define TR_BMAX_T       0.25        /* 許容磁束密度 [T]（Bs の 60〜70%）   */
+#define TR_BMAX_T       0.25        /* 許容磁束密度 [T]（Bs の 60～70%）   */
 #define VCS_MAX_V       250.0       /* Vcs の最大値 [V]                    */
 #define VS_MAX_VS       (TR_BMAX_T*TR_N1*TR_AE_MM2*1.0e-6)
 #define D1_VS_MAX_CNT   ((int)(VS_MAX_VS/VCS_MAX_V/TS_S*PERIODmax))
@@ -1478,7 +1478,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
             Uv   = Uv + KV_A*Ev - KV_B*Ev_1;
             Ev_1 = Ev;
 
-            /* アンチワインドアップ：出せる範囲は 0 〜 IPK_MAX_MUL */
+            /* アンチワインドアップ：出せる範囲は 0 ～ IPK_MAX_MUL */
             lim = IPK_MAX_MUL << SH_V;
             if (Uv > lim) { Uv = lim; }
             if (Uv < 0)   { Uv = 0;   }
@@ -1538,7 +1538,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
         if (Ui >  lim) { Ui =  lim; }
         if (Ui < -lim) { Ui = -lim; }
 #else
-        /* FF が無いと PI 出力がそのままデューティになるので、0 〜 DUTYmax の
+        /* FF が無いと PI 出力がそのままデューティになるので、0 ～ DUTYmax の
          * 全域を使えないと必要な昇圧比に届かない
          * （20V 入力で 48V を出すにはデューティ 85% が要る）。 */
         lim = (int32_t)DUTYmax << SH_I;
