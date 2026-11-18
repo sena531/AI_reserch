@@ -23,8 +23,11 @@
  *     ★電流センサに給電していないと LED2（赤）が点灯し、Q1/Q2 は回らない。
  *       これは仕様（センサ未確立で電流を流さない）。フルブリッジだけは
  *       動くので、無通電でゲート波形の確認ができる。
- *     OPEN_MODE_DUTY = 1 : ツマミがそのままデューティ比（添付の開ループと同じ挙動）
+ *     OPEN_MODE_DUTY = 2 : デューティ 30% 固定（添付の開ループの実際の動作）★既定
+ *     OPEN_MODE_DUTY = 1 : ツマミがそのままデューティ比
  *     OPEN_MODE_DUTY = 0 : ツマミが入力電流の振幅指令 Ipk（昇圧形では安全側）
+ *     零クロスの停止幅と、遅れ側レグの半周期ごとの入れ替えも添付に合わせてある
+ *     （(7) 節の OPEN_ZC_BAND / OPEN_PS_SWAP）。
  *
  *   閉ループ（LED1 点灯）
  *     ADCBUF2 = AN11 = Vo_sense（フォトカプラ絶縁。J22 の真ん中のピン）
@@ -638,10 +641,13 @@ static void holdGatesOff(void);
  *          （元の DAB 設計では PWM8 の出力だった）。
  *          ★他に何も繋がっていないことを確認してから配線する。
  *
- *  ★LEGA_OUT = 1 と PS_SWAP = 1 の併用は避ける★
+ *  ★LEGA_OUT = 1 で位相を入れ替えるときの注意★
  *    Q3 と Q4 が別の発生器になるので、PHASE6 と鏡の PHASE を書く数命令の
  *    あいだに周期境界が来ると、その 1 周期だけデッドタイムが崩れうる。
- *    位相の入れ替えを使うなら LEGA_OUT = 2（レグA 丸ごと移す）にする。
+ *    そこで入れ替え（PS_SWAP / OPEN_PS_SWAP）の位相変化を 1 ISR あたり
+ *    SWAP_STEP_CNT（64 カウント）に制限し、ずれてもデッドタイムが
+ *    ドライバの遅れより長く残るようにしてある（(7) 節）。
+ *    一瞬で入れ替えたいなら LEGA_OUT = 2（レグA 丸ごと移す）にする。
  *    PDC は二重バッファ（IUE = 0）なので、デューティ側にこの問題は無い。
  *
  *  ★通電前の確認手順（センサ無給電ならフルブリッジだけが回る）★
@@ -903,8 +909,14 @@ static void holdGatesOff(void);
 #define MODE_OPEN       0
 #define MODE_CLOSED     1
 
-/* 開ループでボリューム R12（AN2）が操作する量
- *   1 : デューティ比を直に与える（添付の開ループと同じ挙動）
+/* 開ループで Q1/Q2 のデューティを何で決めるか
+ *   2 : 固定デューティ OPEN_DUTY_FIX_CNT（★既定。添付の開ループの実際の動作）
+ *       添付は PDC3/PDC4 = 2880（30%）の固定値を書いていた。ツマミ R12 で
+ *       デューティを変える行はコメントアウトされていて、R12 は効いていない。
+ *       電流ループと FF はバイパスされる。
+ *       ★電流は制限されない（CMP1 とソフト OCP だけが頼り）。
+ *         低い入力電圧から始めること。
+ *   1 : ボリューム R12（AN2）でデューティ比を直に与える（0～DUTYmax）
  *       電流ループと FF はバイパスされる。波形の比較がしやすい。
  *       ★電流は制限されない（CMP1 とソフト OCP だけが頼り）。
  *         低い入力電圧から、ツマミを絞った状態で始めること。
@@ -913,12 +925,40 @@ static void holdGatesOff(void);
  *       まま振幅だけが変わる。昇圧形でデューティを直に固定すると電流が
  *       発散しうるので、定格に近づける段ではこちらに切り替える。
  *
- *  進め方： まず 1 で添付と同じ波形を確認し、確認が済んだら 0 に移る。
+ *  進め方： まず 2 で添付と同じ条件の波形を確認し、確認が済んだら 0 に移る。
  *
  *  ※添付の開ループはツマミ R20（AN3）で位相シフト角も調整していたが、
  *    この基板では AN3 が電流センサ ILsense なので再現していない。
  *    位相角は D1_FIX_DEG で決める。                                      */
-#define OPEN_MODE_DUTY  1
+#define OPEN_MODE_DUTY  2
+#define OPEN_DUTY_FIX_CNT 2880      /* 添付と同じ 30%（PERIODmax = 9600）   */
+
+/* 開ループの零クロス停止幅 [Vac の ADC カウント]
+ *   添付は |Vac| < 20 で Q1/Q2 を止めていた（Vac = ADCBUF0 - ADCBUF1）。
+ *   閉ループは VAC_HYST（約 8 カウント）のまま。                         */
+#define OPEN_ZC_BAND    20
+
+/* 開ループで遅れ側レグを商用半周期ごとに入れ替えるか（添付と同じなら 1）
+ *   正の半周期 : PHASE6 = 0、PHASE7 = 位相（レグB 遅れ）
+ *   負の半周期 : PHASE7 = 0、PHASE6 = 位相（レグA 遅れ）
+ *   閉ループは PS_SWAP に従う（既定 0 = 入れ替えない。偏磁対策）。
+ *
+ *  ★入れ替えの瞬間の位相の変化量を 1 ISR あたり SWAP_STEP_CNT に制限する★
+ *    LEGA_OUT = 1 では Q3（PWM6H）と Q4（鏡の L 出力）が別々の PWM 発生器に
+ *    なる。PHASE6 と鏡の PHASE を書く数命令のあいだに周期境界が来ると、
+ *    その 1 周期だけ Q3 と Q4 が別の位相で動く。位相を一気に 3717 カウント
+ *    動かすとこのずれがデッドタイム（600）を超え、レグA が短絡する。
+ *    1 回の変化を 64 カウント（67ns）に抑えれば、ずれてもデッドタイムが
+ *    625ns -> 558ns に縮むだけで、ドライバの遅れ 500ns より長く残る。
+ *    代償として、入れ替えに 3717/64 = 59 周期（0.6ms）かかる。商用半周期
+ *    （10ms）に比べれば短いが、添付の「一瞬で入れ替え」とはここだけ違う。
+ *    鏡を使わない構成（LEGA_OUT = 0）では制限しない（添付と同じく一瞬）。 */
+#define OPEN_PS_SWAP    1
+#if (LEGA_MIRROR == 1)
+#define SWAP_STEP_CNT   64
+#else
+#define SWAP_STEP_CNT   PHASEmax
+#endif
 
 /* SW1(RE4) の論理。開発ボードは 10k プルアップ + 押下で GND */
 #define SW1_ACTIVE_LOW  1
@@ -992,6 +1032,8 @@ static void holdGatesOff(void);
     int         wPhase_cmd = D1_FIX_CNT;  /* 位相指令。PHASE_MANUAL = 1 なら
                                            * デバッガから直接書く         */
     int         wPhase_deg = 0;     /* いまの位相 [度]（監視専用）         */
+    int         ph6      = 0;       /* PHASE6 に書く値（入れ替えのスルー後）*/
+    int         ph7      = 0;       /* PHASE7 に書く値（同上）              */
     int         ps_trim     = 0;    /* レグ duty の非対称トリム（適用値）  */
     int         ps_trim_cmd = 0;    /* 同 指令値                           */
 
@@ -1324,6 +1366,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
     int32_t tmp;                /* フィードフォワードの一時変数 */
 #endif
     int     use_loop;
+    int     zc_band;            /* 零クロスで Q1/Q2 を止める幅          */
+    int     swap;               /* 1 = 遅れ側レグを半周期ごとに入れ替える */
+    int     ph6_tgt, ph7_tgt;   /* PHASE6/7 の目標値                    */
 
 #if (ISR_TIME_PIN == 1)
     DBG_PIN_LAT = 1;            /* 実行時間をスコープで測る（予算 600 cycle）*/
@@ -1491,11 +1536,16 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
         scan_cnt = 0;
         PHASE_CMD_UPDATE();
 
-#if (OPEN_MODE_DUTY == 1)
-        /* ツマミ 0..4095 -> デューティ 0..DUTYmax（添付の開ループと同じ）。
+#if (OPEN_MODE_DUTY >= 1)
+        /* 2 : 固定デューティ（添付の開ループと同じ 30%）
+         * 1 : ツマミ 0..4095 -> デューティ 0..DUTYmax
          * 電流ループと FF はバイパスし、積分器は止めておく。 */
         use_loop = 0;
+#if (OPEN_MODE_DUTY == 2)
+        Wout = OPEN_DUTY_FIX_CNT;
+#else
         Wout = (int)(((int32_t)Vpot * DUTYmax) >> 12);
+#endif
         Iref = 0;
         Dpi  = 0;
         Dff  = 0;
@@ -1635,8 +1685,10 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
         Ui   = 0;  Ei_1 = 0;
     }
 
-    /* 零クロス近傍は極性が確定しないので PFC を止める */
-    if ((Vac < VAC_HYST) && (Vac > -VAC_HYST)) { Wout = 0; }
+    /* 零クロス近傍は極性が確定しないので PFC を止める
+     * 開ループは添付と同じ幅（OPEN_ZC_BAND）で止める */
+    zc_band = (mode == MODE_OPEN) ? OPEN_ZC_BAND : VAC_HYST;
+    if ((Vac < zc_band) && (Vac > -zc_band)) { Wout = 0; }
 
     /* ゲートを止める理由が立っているなら積分も止める。
      * 「指令は出しているのに電流が返ってこない」状態で積分を続けると
@@ -1722,15 +1774,26 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
 #endif
 
 
-#if (PS_SWAP == 1)
-    if (half) { PHASE6 = 0;       PHASE7 = wPhase; }   /* レグB が位相遅れ */
-    else      { PHASE7 = 0;       PHASE6 = wPhase; }   /* レグA が位相遅れ */
-#else
-    PHASE6 = 0;
-    PHASE7 = wPhase;
-#endif
+    /* 遅れ側レグの入れ替え
+     *   開ループ : OPEN_PS_SWAP（添付と同じなら 1）
+     *   閉ループ : PS_SWAP（既定 0）
+     * 目標値へは 1 ISR あたり SWAP_STEP_CNT ずつ近づける（理由は (7) 節）。
+     * モードを切り替えたときのレグの持ち替えも同じ制限で安全に移る。 */
+    swap = (mode == MODE_OPEN) ? OPEN_PS_SWAP : PS_SWAP;
+    if (swap && (half == 0)) { ph6_tgt = wPhase; ph7_tgt = 0;      }  /* レグA 遅れ */
+    else                     { ph6_tgt = 0;      ph7_tgt = wPhase; }  /* レグB 遅れ */
+
+    if      (ph6 < ph6_tgt - SWAP_STEP_CNT) { ph6 += SWAP_STEP_CNT; }
+    else if (ph6 > ph6_tgt + SWAP_STEP_CNT) { ph6 -= SWAP_STEP_CNT; }
+    else                                    { ph6  = ph6_tgt;       }
+    if      (ph7 < ph7_tgt - SWAP_STEP_CNT) { ph7 += SWAP_STEP_CNT; }
+    else if (ph7 > ph7_tgt + SWAP_STEP_CNT) { ph7 -= SWAP_STEP_CNT; }
+    else                                    { ph7  = ph7_tgt;       }
+
+    PHASE6 = ph6;
+    PHASE7 = ph7;
 #if (LEGA_MIRROR == 1)
-    MIR_PHASE = PHASE6;                 /* ★PHASE6 と必ず同じ値にする（鏡）*/
+    MIR_PHASE = ph6;                    /* ★PHASE6 と必ず同じ値にする（鏡）*/
 #endif
 
     /* -------------------------------------------------------------------
