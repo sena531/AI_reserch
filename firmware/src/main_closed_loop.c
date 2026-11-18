@@ -27,7 +27,8 @@
  *     OPEN_MODE_DUTY = 1 : ツマミがそのままデューティ比
  *     OPEN_MODE_DUTY = 0 : ツマミが入力電流の振幅指令 Ipk（昇圧形では安全側）
  *     零クロスの停止幅と、遅れ側レグの半周期ごとの入れ替えも添付に合わせてある
- *     （(7) 節の OPEN_ZC_BAND / OPEN_PS_SWAP）。
+ *     （(7) 節の OPEN_ZC_BAND / OPEN_PS_SWAP）。入れ替えはトランスに直流が
+ *     入らないよう、レグB だけを動かして行う。
  *
  *   閉ループ（LED1 点灯）
  *     ADCBUF2 = AN11 = Vo_sense（フォトカプラ絶縁。J22 の真ん中のピン）
@@ -594,12 +595,21 @@ static void holdGatesOff(void);
 #define KPH_A           ((int32_t)((KP_PH_CNT + KIT_PH_CNT/2.0)*(1L<<SH_PH))) /* 18732 */
 #define KPH_B           ((int32_t)((KP_PH_CNT - KIT_PH_CNT/2.0)*(1L<<SH_PH))) /*  6144 */
 
-/* 位相の遅れ側を商用半周期ごとに入れ替えるか（修論 4.2）
+/* 位相の遅れ側を商用半周期ごとに入れ替えるか（修論 4.2）〔閉ループ用〕
  *   0 : 常にレグB を遅らせる ★既定★
- *       電力伝送窓の長さは入れ替えても同じなので特性は変わらないのに、
- *       入れ替えの瞬間だけ位相が ±φ 飛ぶ。これが 100Hz で一撃ずつ
- *       トランスに偏磁を入れるので、既定では止めてある（下記参照）。
- *   1 : 正の半周期はレグB遅れ、負の半周期はレグA遅れ（修論どおり）        */
+ *   1 : 正の半周期はレグB遅れ、負の半周期はレグA遅れ（修論どおり）
+ *   開ループは OPEN_PS_SWAP（(7) 節）に従う。
+ *
+ *  ★入れ替えはレグB だけを動かして行う（レグA の PHASE6 は常に 0）★
+ *    「レグA が φ 遅れる」は「レグB が φ 進む」と同じ動作なので、
+ *    負の半周期は PHASE7 = PERIODmax - φ にする（B を φ 進める）。
+ *    両レグを同時に動かす書き方（PHASE6 = φ, PHASE7 = 0）だと、入れ替えの
+ *    境目で同じ向きの電圧窓が 2 回続き、トランスに一撃の直流が入る。
+ *      一撃の大きさ   = Vcs * φ * 1.04ns = 200V * 3717cnt = 775 uV*s
+ *      励磁電流の偏り = 775 uV*s / Lm(308uH) = 2.5A（半周期ごとに +-1.26A）
+ *    入れ替えをゆっくり行っても、合計のずれは同じなので減らない。
+ *    レグB だけを動かせば窓は交互のまま保たれ、偏りは 0 になる
+ *    （理想スイッチのモデルで確認。デッドタイムと漏れの降下は含まない）。 */
 #define PS_SWAP         0
 
 
@@ -642,13 +652,11 @@ static void holdGatesOff(void);
  *          （元の DAB 設計では PWM8 の出力だった）。
  *          ★他に何も繋がっていないことを確認してから配線する。
  *
- *  ★LEGA_OUT = 1 で位相を入れ替えるときの注意★
- *    Q3 と Q4 が別の発生器になるので、PHASE6 と鏡の PHASE を書く数命令の
- *    あいだに周期境界が来ると、その 1 周期だけデッドタイムが崩れうる。
- *    そこで入れ替え（PS_SWAP / OPEN_PS_SWAP）の位相変化を 1 ISR あたり
- *    SWAP_STEP_CNT（64 カウント）に制限し、ずれてもデッドタイムが
- *    ドライバの遅れより長く残るようにしてある（(7) 節）。
- *    一瞬で入れ替えたいなら LEGA_OUT = 2（レグA 丸ごと移す）にする。
+ *  ★LEGA_OUT = 1 でも位相の入れ替えは安全★
+ *    Q3 と Q4 が別の発生器になるので、PHASE6 と鏡の PHASE が食い違うと
+ *    その 1 周期だけデッドタイムが崩れうる。しかし入れ替えはレグB だけを
+ *    動かして行い、レグA の PHASE6 と鏡の PHASE は常に 0 のまま変えない
+ *    （(5) の PS_SWAP の説明を参照）ので、この問題は起きない。
  *    PDC は二重バッファ（IUE = 0）なので、デューティ側にこの問題は無い。
  *
  *  ★通電前の確認手順（センサ無給電ならフルブリッジだけが回る）★
@@ -773,7 +781,7 @@ static void holdGatesOff(void);
  *      ソフトスタートも兼ねる（PS_SLEW_CNT = 4 なら 3717 カウントまで
  *      929 回 = 9.3ms で立ち上がる）。
  *
- *  (c) PS_SWAP = 0（上記）
+ *  (c) PS_SWAP = 0（上記）。入れ替える場合もレグB だけを動かす（上記）
  *
  *  (d) V*s 上限  VS_LIMIT_EN
  *      コア定数から許容 V*s を決めて位相指令を制限する。偏磁を打ち消した
@@ -940,26 +948,14 @@ static void holdGatesOff(void);
 #define OPEN_ZC_BAND    20
 
 /* 開ループで遅れ側レグを商用半周期ごとに入れ替えるか（添付と同じなら 1）
- *   正の半周期 : PHASE6 = 0、PHASE7 = 位相（レグB 遅れ）
- *   負の半周期 : PHASE7 = 0、PHASE6 = 位相（レグA 遅れ）
- *   閉ループは PS_SWAP に従う（既定 0 = 入れ替えない。偏磁対策）。
- *
- *  ★入れ替えの瞬間の位相の変化量を 1 ISR あたり SWAP_STEP_CNT に制限する★
- *    LEGA_OUT = 1 では Q3（PWM6H）と Q4（鏡の L 出力）が別々の PWM 発生器に
- *    なる。PHASE6 と鏡の PHASE を書く数命令のあいだに周期境界が来ると、
- *    その 1 周期だけ Q3 と Q4 が別の位相で動く。位相を一気に 3717 カウント
- *    動かすとこのずれがデッドタイム（600）を超え、レグA が短絡する。
- *    1 回の変化を 64 カウント（67ns）に抑えれば、ずれてもデッドタイムが
- *    625ns -> 558ns に縮むだけで、ドライバの遅れ 500ns より長く残る。
- *    代償として、入れ替えに 3717/64 = 59 周期（0.6ms）かかる。商用半周期
- *    （10ms）に比べれば短いが、添付の「一瞬で入れ替え」とはここだけ違う。
- *    鏡を使わない構成（LEGA_OUT = 0）では制限しない（添付と同じく一瞬）。 */
+ *   正の半周期 : PHASE6 = 0、PHASE7 = φ            （レグB が φ 遅れ）
+ *   負の半周期 : PHASE6 = 0、PHASE7 = PERIODmax - φ （レグB が φ 進む
+ *                                                     = レグA が φ 遅れ）
+ *   どちらのレグが遅れるかは添付と同じ。添付は負の半周期に PHASE6 = φ、
+ *   PHASE7 = 0 と両レグを動かしていたが、それだと入れ替えのたびに
+ *   トランスに直流が入る（偏り 2.5A）。レグB だけを動かして 0 にしてある。
+ *   閉ループは PS_SWAP に従う（既定 0 = 入れ替えない）。                  */
 #define OPEN_PS_SWAP    1
-#if (LEGA_MIRROR == 1)
-#define SWAP_STEP_CNT   64
-#else
-#define SWAP_STEP_CNT   PHASEmax
-#endif
 
 /* SW1(RE4) の論理。開発ボードは 10k プルアップ + 押下で GND */
 #define SW1_ACTIVE_LOW  1
@@ -1033,8 +1029,6 @@ static void holdGatesOff(void);
     int         wPhase_cmd = D1_FIX_CNT;  /* 位相指令。PHASE_MANUAL = 1 なら
                                            * デバッガから直接書く         */
     int         wPhase_deg = 0;     /* いまの位相 [度]（監視専用）         */
-    int         ph6      = 0;       /* PHASE6 に書く値（入れ替えのスルー後）*/
-    int         ph7      = 0;       /* PHASE7 に書く値（同上）              */
     int         ps_trim     = 0;    /* レグ duty の非対称トリム（適用値）  */
     int         ps_trim_cmd = 0;    /* 同 指令値                           */
 
@@ -1369,7 +1363,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
     int     use_loop;
     int     zc_band;            /* 零クロスで Q1/Q2 を止める幅          */
     int     swap;               /* 1 = 遅れ側レグを半周期ごとに入れ替える */
-    int     ph6_tgt, ph7_tgt;   /* PHASE6/7 の目標値                    */
+    int     ph7;                /* PHASE7 に書く値                      */
 
 #if (ISR_TIME_PIN == 1)
     DBG_PIN_LAT = 1;            /* 実行時間をスコープで測る（予算 600 cycle）*/
@@ -1778,23 +1772,19 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt(void)
     /* 遅れ側レグの入れ替え
      *   開ループ : OPEN_PS_SWAP（添付と同じなら 1）
      *   閉ループ : PS_SWAP（既定 0）
-     * 目標値へは 1 ISR あたり SWAP_STEP_CNT ずつ近づける（理由は (7) 節）。
-     * モードを切り替えたときのレグの持ち替えも同じ制限で安全に移る。 */
+     * ★レグB だけを動かす（PHASE6 は常に 0）★
+     *   負の半周期は B を φ 進める（PHASE7 = PERIODmax - φ）。これは
+     *   「A が φ 遅れる」と同じ動作で、入れ替えの境目でも正負の電圧窓が
+     *   交互に保たれるので、トランスに直流が入らない（(5) の PS_SWAP）。
+     *   φ = 0 のときは PERIODmax ではなく 0 を書く（範囲外にしない）。 */
     swap = (mode == MODE_OPEN) ? OPEN_PS_SWAP : PS_SWAP;
-    if (swap && (half == 0)) { ph6_tgt = wPhase; ph7_tgt = 0;      }  /* レグA 遅れ */
-    else                     { ph6_tgt = 0;      ph7_tgt = wPhase; }  /* レグB 遅れ */
+    if (swap && (half == 0) && (wPhase > 0)) { ph7 = PERIODmax - wPhase; } /* B が φ 進む */
+    else                                     { ph7 = wPhase;             } /* B が φ 遅れ */
 
-    if      (ph6 < ph6_tgt - SWAP_STEP_CNT) { ph6 += SWAP_STEP_CNT; }
-    else if (ph6 > ph6_tgt + SWAP_STEP_CNT) { ph6 -= SWAP_STEP_CNT; }
-    else                                    { ph6  = ph6_tgt;       }
-    if      (ph7 < ph7_tgt - SWAP_STEP_CNT) { ph7 += SWAP_STEP_CNT; }
-    else if (ph7 > ph7_tgt + SWAP_STEP_CNT) { ph7 -= SWAP_STEP_CNT; }
-    else                                    { ph7  = ph7_tgt;       }
-
-    PHASE6 = ph6;
+    PHASE6 = 0;
     PHASE7 = ph7;
 #if (LEGA_MIRROR == 1)
-    MIR_PHASE = ph6;                    /* ★PHASE6 と必ず同じ値にする（鏡）*/
+    MIR_PHASE = 0;                      /* ★PHASE6 と必ず同じ値にする（鏡）*/
 #endif
 
     /* -------------------------------------------------------------------
