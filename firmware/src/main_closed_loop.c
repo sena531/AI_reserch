@@ -617,8 +617,9 @@ static void holdGatesOff(void);
  *  PWM6L とビット単位で同一の波形になる（ソフトで作る位相関係ではない）。
  *
  *  LEGA_OUT                                                 動かす配線
- *    0 : Q3 = PWM6H(72pin/RD4)  Q4 = PWM6L(73pin/RD15)      なし（PWM6L 正常時）
- *    1 : Q3 = PWM6H(72pin/RD4)  Q4 = 鏡の L ピン            ★既定★ Q4 の 1 本だけ
+ *    0 : Q3 = PWM6H(72pin/RD4)  Q4 = PWM6L(73pin/RD15)      なし（PWM6L 正常時）★既定★
+ *        マイコンを交換して PWM6L が正常になったのでこちらに戻した。
+ *    1 : Q3 = PWM6H(72pin/RD4)  Q4 = 鏡の L ピン            Q4 の 1 本だけ
  *    2 : Q3 = 鏡の H ピン       Q4 = 鏡の L ピン            2 本（レグA 丸ごと）
  *
  *  LEGA_MIR  鏡にする PWM 発生器
@@ -657,7 +658,7 @@ static void holdGatesOff(void);
  *       デッドタイムは 625ns ずつ。ここが崩れていたらレグA が短絡する。
  *    3. 73pin/RD15（旧 PWM6L）が静かになっているか（PENL = 0 で GPIO 入力）。
  * ------------------------------------------------------------------------ */
-#define LEGA_OUT        1
+#define LEGA_OUT        0
 #define LEGA_MIR        5
 #define CLC2_KEEP_STATIC 1          /* LEGA_MIR = 8 のとき CLC2 を常時 H に */
 
